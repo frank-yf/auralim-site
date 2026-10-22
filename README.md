@@ -43,7 +43,7 @@ GitHub is queried only by the update script, never when a visitor opens the webs
 
 ## GitHub Pages
 
-The GitHub Actions workflow `.github/workflows/pages.yml` builds and deploys `main`, or can be run manually. Dependencies use the committed lockfile and Node.js 24. Build permissions are read-only; only the deploy job receives Pages and OIDC write permissions.
+The GitHub Actions workflow `.github/workflows/pages.yml` builds and deploys `main`, or can be run manually. Changes only to `README.md` or `VALIDATION.md` do not trigger another deployment. Dependencies use the committed lockfile and Node.js 24. Build permissions are read-only; only the deploy job receives Pages and OIDC write permissions.
 
 - 简体中文: https://frank-yf.github.io/auralim-site/
 - English: https://frank-yf.github.io/auralim-site/en/

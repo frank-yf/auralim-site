@@ -1,6 +1,6 @@
-# Local first-version validation — 2026-10-22
+# Website validation — 2026-10-22
 
-Scope: the new `auralim-site` website only. No native application code was changed or globally retested. No remote deployment, GitHub Pages configuration, push, Site registration or DNS change was performed.
+Initial local-only scope: the new `auralim-site` website. No native application code was changed or globally retested. At that stage no remote deployment, GitHub Pages configuration, push, Site registration or DNS change was performed. The subsequent GitHub Pages deployment is recorded below.
 
 ## Passed
 
@@ -32,3 +32,16 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Scoped Chrome check passed in both website languages: light → dark → light selection, keyboard arrows, both thumbnails, both zoom images, image decoding and correct panel labels. No page errors or local asset errors. Visual check confirms genuinely dark text/control/background rendering for the dark menu asset.
 - `npm run check`: zero errors / warnings / hints. Local static build passed. No unrelated website or native app interactions were retested; no deployment or push.
 - Evidence: `artifacts/gallery-synced-dark.png`, `artifacts/gallery-sync-result.json`, `artifacts/auralim-site-gallery-sync-*.log`, and the isolated native capture test source/log retained under artifacts.
+
+## GitHub Pages deployment — 2026-10-22
+
+- Enabled GitHub Pages in custom workflow mode, with HTTPS and no custom domain.
+- Deployed commit: `ced77d81802a3729a2e2a70a1b7f0dccb31ce37b`.
+- [Actions run 39764670665](https://github.com/frank-yf/auralim-site/actions/runs/39764670665): build and deploy jobs succeeded, including Node.js 24, locked dependency installation, type checking, static build and project-prefix resource validation.
+- 中文: https://frank-yf.github.io/auralim-site/ — HTTP 200, `lang=zh-CN`, correct canonical URL.
+- English: https://frank-yf.github.io/auralim-site/en/ — HTTP 200, `lang=en`, correct canonical URL.
+- Verified 10 unique deployed routes/assets, including both pages, CSS, JavaScript, icon, share image, and both menu/settings light/dark screenshots. All returned HTTP 200 with expected content types. All 6 PNG response hashes matched the local public assets exactly.
+- Real public-site Chrome checks passed in both languages: prefixed language links, loaded JavaScript controlling the demo, both gallery images following light/dark selection, and menu-image zoom using the current appearance. Both pages fit a 390px viewport; no page errors or local-site resource errors occurred.
+- Source is built with `/auralim-site/` from the configure-pages output; local development retains `/`. The workflow checks both routes and all referenced local files before upload. Readme/validation-only commits do not redeploy.
+- Scope was publishing, bilingual pages and asset loading, plus affected live interactions. No unrelated native app or full website regression was run.
+- Ignored evidence: `artifacts/pages-live-result.json`, `artifacts/pages-live-check.mjs`, `artifacts/pages-live-desktop.png`, mobile captures, and `artifacts/auralim-pages-*.log`.
