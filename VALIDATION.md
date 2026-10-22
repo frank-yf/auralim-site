@@ -72,4 +72,11 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Location improvements are labeled as included in the current release, with the version read from release metadata. Existing v0.2.5 screenshot captions remain accurate to their original captures.
 - `npm run check`: 0 errors, warnings or hints. Scoped `tests/content.test.mjs`: 3 tests passed. Production-prefix build and generated-page verification passed for both routes and 13 local routes/assets; generated pages verify both primary download URLs and all twelve locale entries.
 - Scoped Chrome checks passed on Chinese/English pages in light/dark themes at 320, 390 and 1440px: current release and size, both ZIP download buttons, complete locale list, no document or list-item overflow, and no page/resource errors. Representative language-list screenshots were inspected. Evidence: ignored `artifacts/release-031-local.json` and `artifacts/languages-031-*.png`.
-- No native app changes or full website interaction regression were performed. Deployment verification will be recorded separately after publication.
+- No native app changes or full website interaction regression were performed. Publication and live verification are recorded below.
+
+
+### v0.3.1 live publication
+
+- Deployed website source `ecd08d5d98aa8c703184b8f64bad5950f6b3b7ce` through [Pages run 39769255192](https://github.com/frank-yf/auralim-site/actions/runs/39769255192). Both build and deploy jobs succeeded.
+- Direct public-site Chrome checks passed at `/auralim-site/` and `/auralim-site/en/` in both light/dark themes: v0.3.1 and 7.7 MB, ZIP primary downloads, all 12 locale entries, unchanged bilingual website navigation, and no stale v0.2.2/development-release messages. Both pages and language-list items fit 320/390/1440px viewports without overflow. No page or website-resource errors were observed.
+- Live evidence: ignored `artifacts/release-031-live.json` and language-card screenshots. This documentation-only update does not trigger a new Pages deployment.
