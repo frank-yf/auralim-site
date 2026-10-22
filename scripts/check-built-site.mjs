@@ -12,6 +12,15 @@ for (const [path, language] of [['', 'zh-CN'], ['en/', 'en']]) {
   const page = new URL(path, site);
   const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/);
   assert.equal(canonical?.[1], page.href, `Incorrect canonical URL for ${language}`);
+  for (const [id, kind] of [['menu-screenshot', 'menu'], ['app-screenshot', 'settings']]) {
+    const image = html.match(new RegExp(`<img[^>]*id="${id}"[^>]*>`))?.[0];
+    assert.ok(image, `Missing ${kind} capture for ${language}`);
+    for (const [attribute, appearance] of [['src', 'light'], ['data-light-src', 'light'], ['data-dark-src', 'dark']]) {
+      const value = image.match(new RegExp(`(?:^|\\s)${attribute}="([^"]+)"`))?.[1];
+      const name = `${kind}${language === 'en' ? '-en' : ''}-${appearance}.png`;
+      assert.equal(value, new URL(`images/${name}`, site).pathname, `Wrong screenshot language/path: ${language} ${attribute}`);
+    }
+  }
   const urls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(match => match[1]);
   for (const value of urls) {
     if (value.startsWith('#') || value.startsWith('data:')) continue;

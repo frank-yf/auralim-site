@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .menu-shot{margin:25px 0 0;max-width:250px}.menu-shot button{display:block;padding:0;background:transparent;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px #26334a16;border:1px solid var(--line);transition:transform .2s}.menu-shot button:hover{transform:translateY(-3px)}.menu-shot img{width:100%;height:auto}.menu-shot figcaption{font-size:8px;color:var(--muted);margin-top:9px;line-height:1.8}@media(max-width:570px){.menu-shot{max-width:245px;margin:25px auto 5px}.menu-shot figcaption{text-align:center}}
+
+html[data-gallery-ready="false"] [data-gallery-image]{visibility:hidden}

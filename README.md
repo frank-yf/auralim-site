@@ -28,8 +28,8 @@ The site includes an interactive day/night desktop, Light / Auto / Dark controls
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
 - `src/data/release.json`: verified public download metadata. Current public release is v0.2.2; local native app development is v0.2.5. Unreleased location improvements are explicitly marked.
 - `public/images/app-icon.png`: from the native app's tracked icon resource.
-- `public/images/settings-*.png`: genuine captures of the native SwiftUI settings view, using injected example location data. These include development-build changes and are labeled accordingly. No user location or account information is present.
-- `public/images/menu-*.png`: matching light/dark captures of the v0.2.5 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. Both follow the gallery appearance selection, including the zoom view.
+- `public/images/settings-*.png`: native v0.2.5 settings captures using temporary example preferences. English pages use `settings-en-*.png`; Chinese pages use `settings-*.png`. No user location or account information is present.
+- `public/images/menu-*.png`: matching light/dark captures of the v0.2.5 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. English pages use `menu-en-*.png`; Chinese pages use `menu-*.png`. Both menu and settings images initially follow the website theme and resynchronize when that theme changes. Manual gallery preview and zoom remain available.
 - `src/components/Landscape.astro`: original SVG desktop illustration.
 
 Update download information explicitly, then rebuild:

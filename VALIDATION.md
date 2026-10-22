@@ -45,3 +45,14 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Source is built with `/auralim-site/` from the configure-pages output; local development retains `/`. The workflow checks both routes and all referenced local files before upload. Readme/validation-only commits do not redeploy.
 - Scope was publishing, bilingual pages and asset loading, plus affected live interactions. No unrelated native app or full website regression was run.
 - Ignored evidence: `artifacts/pages-live-result.json`, `artifacts/pages-live-check.mjs`, `artifacts/pages-live-desktop.png`, mobile captures, and `artifacts/auralim-pages-*.log`.
+
+## Localized gallery and website-theme defaults — 2026-10-22
+
+- Replaced mismatched settings examples with paired native v0.2.5 menu/settings captures in Simplified Chinese and English, both light and dark. Captures were generated from the isolated committed source with temporary example preferences and a fake appearance service; the working native app and system appearance were not changed.
+- English pages select `menu-en-*.png` / `settings-en-*.png`; Chinese pages select the matching Chinese assets. Captions identify the captured version and sample data.
+- The gallery initializes from the website theme, honoring the initial system preference and any saved website-theme selection. The website theme button resynchronizes both images and the selected gallery tab. Manual gallery preview remains independent until the website theme changes or the page reloads.
+- Initial images stay hidden until the matching theme assets decode, preventing a default-light flash on a dark site. Rapid initial selections use a generation check before revealing images.
+- Scoped local Chrome checks passed for both languages: system light/dark, saved dark over a light system, saved light over a dark system, global toggle, manual preview, keyboard selection, both zoom views, reload, language navigation with a saved dark website theme, 390px width, and a deliberately delayed first dark image. No browser errors occurred.
+- Astro checks: zero errors / warnings / hints. GitHub project-path build passed with 13 unique referenced routes/assets. Build validation now also checks that each route uses its language-specific image sources.
+- Only the gallery language/theme change and related build paths were checked. No full native app or website regression was run.
+- Evidence is retained under ignored artifacts: `gallery-language-theme-local.json`, `gallery-language-theme-check.mjs`, `gallery-en-site-dark.png`, `gallery-zh-CN-site-dark.png`, capture source/log and related type/build logs.

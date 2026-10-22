@@ -75,16 +75,24 @@ function setTheme(dark: boolean) {
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   themeButton.setAttribute('aria-pressed', String(dark));
   get<HTMLMetaElement>('meta[name="theme-color"]').content = dark ? '#171c27' : '#f7f6f2';
+  const tab = tabs.find(button => button.dataset.galleryTab === (dark ? 'dark' : 'light'));
+  if (tab) selectScreenshot(tab);
 }
-setTheme(document.documentElement.dataset.theme === 'dark');
 themeButton.addEventListener('click', () => { const dark = document.documentElement.dataset.theme !== 'dark'; setTheme(dark); try { localStorage.setItem('auralim-site-theme', dark ? 'dark' : 'light'); } catch {} });
 const image = get<HTMLImageElement>('#app-screenshot');
 const dialog = get<HTMLDialogElement>('#screenshot-dialog');
 const tabs = all<HTMLButtonElement>('[data-gallery-tab]');
+let gallerySelection = 0;
 function selectScreenshot(button: HTMLButtonElement, focus = false) {
   tabs.forEach(tab => { const active = tab === button; tab.setAttribute('aria-selected',String(active)); tab.tabIndex = active ? 0 : -1; });
-  all<HTMLImageElement>('[data-gallery-image]').forEach(screenshot => {
+  const selection = ++gallerySelection;
+  const screenshots = all<HTMLImageElement>('[data-gallery-image]');
+  screenshots.forEach(screenshot => {
     screenshot.src = button.dataset.galleryTab === 'dark' ? screenshot.dataset.darkSrc! : screenshot.dataset.lightSrc!;
+  });
+  // Reveal the initial gallery only after its actual site-theme images decode.
+  Promise.all(screenshots.map(screenshot => screenshot.decode().catch(() => {}))).then(() => {
+    if (selection === gallerySelection) document.documentElement.dataset.galleryReady = 'true';
   });
   all<HTMLElement>('[data-gallery-panel]').forEach(panel => panel.setAttribute('aria-labelledby', button.id));
   if (focus) button.focus();
@@ -106,4 +114,5 @@ get('#open-menu-screenshot').addEventListener('click', () => {
 });
 get('#close-screenshot').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
+setTheme(document.documentElement.dataset.theme === 'dark');
 update();
