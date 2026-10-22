@@ -1,0 +1,106 @@
+---
+import { content, type Locale } from '../i18n/content';
+import release from '../data/release.json';
+import Icon from './Icon.astro';
+import Landscape from './Landscape.astro';
+import '../styles/global.css';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = content[locale];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const asset = (path = '') => `${base}/${path}`;
+const canonical = new URL(asset(locale === 'en' ? 'en/' : ''), Astro.site);
+const releaseSize = (release.size / 1_000_000).toFixed(1);
+---
+<!doctype html>
+<html lang={locale} data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f6f2" />
+    <meta name="description" content={t.description} />
+    <meta property="og:title" content={t.title} />
+    <meta property="og:description" content={t.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={new URL(asset('images/social-card.png'), Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(asset(), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(asset('en/'), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(asset(), Astro.site)} />
+    <link rel="icon" type="image/png" href={asset('images/app-icon.png')} />
+    <title>{t.title}</title>
+    <script is:inline>
+      try { const saved = localStorage.getItem('auralim-site-theme'); document.documentElement.dataset.theme = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; } catch { }
+    </script>
+  </head>
+  <body data-locale={locale}>
+    <a class="skip-link" href="#main">{t.skip}</a>
+    <header class="site-header wrap">
+      <a class="brand" href={asset()} aria-label={t.name}><img src={asset('images/app-icon.png')} width="34" height="34" alt="" /><span>Auralim<span class="brand-cn">{locale === 'zh-CN' ? '晨昏' : ''}</span></span></a>
+      <nav class="main-nav" aria-label={locale === 'en' ? 'Main navigation' : '主导航'}><a href="#experience">{t.nav[0]}</a><a href="#details">{t.nav[1]}</a><a href="#faq">{t.nav[2]}</a></nav>
+      <div class="header-tools">
+        <div class="language-switch" aria-label={t.language}><a href={asset()} lang="zh-CN" aria-current={locale === 'zh-CN' ? 'page' : undefined}>简中</a><span>/</span><a href={asset('en/')} lang="en" aria-current={locale === 'en' ? 'page' : undefined}>EN</a></div>
+        <button class="icon-button theme-button" aria-label={t.theme} aria-pressed="false"><Icon name="sun" /></button>
+        <a class="header-download" href="#download">{locale === 'en' ? 'Get Auralim' : '下载'} <Icon name="arrow" size={15} /></a>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="tiny-orbit"></span>{t.eyebrow}</p>
+          <h1 id="hero-title"><span>{t.headline[0]}{locale === 'zh-CN' ? '，' : ''}</span><span class="hero-title-last">{t.headline[1]}</span></h1>
+          <p class="hero-lead">{t.intro}</p>
+          <p class="hero-description">{t.introMore}</p>
+          <div class="hero-actions"><a class="button primary" href={release.dmg}><Icon name="download" size={18} />{t.download}</a><a class="text-link" href="https://github.com/frank-yf/auralim-mac" target="_blank" rel="noreferrer">{t.source}<Icon name="arrow" size={16} /></a></div>
+          <p class="requirements">{t.requirements}</p>
+          <a class="hero-explore" href="#experience"><span>↓</span>{t.heroNote}</a>
+        </div>
+        <div class="hero-art" id="experience">
+          <div class="orbit-label"><span class="orbit-line"></span>BETWEEN LIGHT AND DARK</div>
+          <div class="desktop" data-appearance="light" role="group" aria-label={t.sceneLabel}>
+            <Landscape />
+            <div class="desktop-menubar"><span class="desktop-wordmark">◈ <b>Finder</b><span>File</span><span>Edit</span></span><span class="menubar-right"><Icon name="sun" size={15} /><span class="status-active"></span><span data-clock>17:20</span></span></div>
+            <div class="desktop-caption"><span class="caption-line"></span><span>the quiet hours</span></div>
+            <div class="app-panel">
+              <div class="app-heading"><img src={asset('images/app-icon.png')} width="35" height="35" alt="" /><div><strong>{t.name}</strong><span>{locale === 'zh-CN' ? '日升而明，日落而暗' : 'Between light and dark.'}</span></div><span class="panel-live"></span></div>
+              <fieldset class="mode-switch" role="radiogroup"><legend class="sr-only">{locale === 'en' ? 'Demo appearance mode' : '演示外观模式'}</legend>{(['light','auto','dark'] as const).map((mode, index) => <button type="button" role="radio" data-mode={mode} aria-checked={mode === 'auto' ? 'true' : 'false'} tabindex={mode === 'auto' ? 0 : -1}>{t.modes[index]}</button>)}</fieldset>
+              <div class="panel-status"><span class="status-dot"></span><span data-mode-status>{t.autoStatus}</span></div>
+              <div class="panel-location"><span>{t.demoCity}</span><span>UTC+8</span></div>
+              <div class="panel-times"><div><span><Icon name="sun" size={14} />{t.sunrise}</span><strong data-rise>06:12</strong></div><div><span><Icon name="moon" size={13} />{t.sunset}</span><strong data-set>17:58</strong></div></div>
+              <div class="panel-footer"><a href="#gallery"><Icon name="settings" size={13} />{t.settings}</a><span class="panel-demo-label">{t.demo}</span></div>
+            </div>
+            <div class="desktop-dock" aria-hidden="true"><span class="dock-finder">◧</span><span class="dock-safari">◈</span><span class="dock-note">▤</span><img src={asset('images/app-icon.png')} width="33" height="33" alt="" /><span class="dock-settings">⚙</span></div>
+          </div>
+          <div class="time-controller">
+            <div class="time-controller-top"><span class="demo-badge">{t.demo}</span><label for="day-time">{t.timeLabel} <output id="demo-time" for="day-time">17:20</output></label><span class="appearance-label"><Icon name="sun" size={14} /><span data-current-appearance>{t.light}</span></span></div>
+            <div class="timeline-row"><Icon name="moon" size={16} /><input id="day-time" type="range" min="0" max="1439" step="1" value="1040" aria-describedby="demo-note" /><Icon name="sun" size={17} /></div>
+            <div class="timeline-ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+            <div class="demo-shortcuts"><button type="button" data-jump="sunrise"><Icon name="sun" size={14} />{t.riseJump}</button><button type="button" data-jump="sunset"><Icon name="moon" size={14} />{t.setJump}</button><span>{locale === 'en' ? 'drag to explore ↗' : '拖动，感受变化 ↗'}</span></div>
+          </div>
+          <p id="demo-note" class="demo-note">{t.demoHint}</p>
+        </div>
+      </section>
+      <div class="signature wrap"><span>{locale === 'en' ? 'Made for the way you use your Mac.' : '让 Mac 的每一天，多一点自然。'}</span><div>{t.signature.map((label, i) => <span><Icon name={['spark','sun','globe'][i]} size={16} />{label}</span>)}</div></div>
+      <section class="rhythm wrap" id="rhythm" aria-labelledby="rhythm-title">
+        <div class="section-copy"><p class="eyebrow">{t.rhythmKicker}</p><h2 id="rhythm-title">{t.rhythmTitle}</h2><p class="section-description">{t.rhythmBody}</p><div class="rhythm-illustration" aria-hidden="true"><span class="little-sun"></span><span class="dotted-arc"></span><span class="little-moon">☾</span><span class="arc-time">06:12 <span>—</span> 17:58</span></div><p class="example-note">{t.fixedExample}</p></div>
+        <div class="offset-card"><div class="offset-card-head"><span>{t.offsetTitle}</span><button type="button" id="reset-offsets">↺ {t.reset}</button></div>
+          {(['sunrise', 'sunset'] as const).map((event, index) => <div class:list={['offset-control',event]} data-event={event}>
+            <div class="offset-head"><label for={`${event}-offset`}><Icon name={index === 0 ? 'sun' : 'moon'} size={18} />{t.offsetLabels[index]}</label><output data-offset-description={event}>{t.onTime}</output></div>
+            <div class="offset-input-row"><input type="range" id={`${event}-offset`} min="-120" max="120" step="1" value="0" data-offset-track={event} aria-label={t.offsetLabels[index]} aria-describedby="offset-note" /><div class="number-input"><input type="number" id={`${event}-minutes`} min="-120" max="120" step="1" value="0" inputmode="numeric" data-offset-input={event} aria-label={`${t.offsetLabels[index]} (${t.minute})`} /><span>{t.minute}</span></div></div>
+            <div class="offset-directions"><span>{index === 0 ? t.sunriseLeft : t.sunsetLeft}</span><span>0</span><span>{index === 0 ? t.sunriseRight : t.sunsetRight}</span></div>
+          </div>)}
+          <div class="adjusted-times" aria-live="polite" aria-atomic="true"><div><span>{t.sunrise}</span><strong data-rise>06:12</strong></div><span>→</span><div><span>{t.sunset}</span><strong data-set>17:58</strong></div></div><p id="offset-note">{t.offsetNote}</p>
+        </div>
+      </section>
+      <section class="details wrap" id="details" aria-labelledby="details-title"><div class="section-heading"><p class="eyebrow">{t.detailsKicker}</p><h2 id="details-title">{t.detailsTitle}</h2></div><div class="feature-grid">{t.features.map(([number, title, description], i) => <article class="feature"><div class="feature-top"><span>{number}</span><Icon name={['sun','spark','shield','clock'][i]} size={26} /></div><h3>{title}</h3><p>{description}</p></article>)}</div><div class="travel-note"><div class="travel-symbol"><Icon name="pin" size={27} /></div><div><span class="release-pill">{t.upcoming}</span><h3>{t.upcomingTitle}</h3><p>{t.upcomingBody}</p><p class="upcoming-disclaimer">{t.upcomingNote}</p></div></div></section>
+      <section class="gallery-section" id="gallery" aria-labelledby="gallery-title"><div class="gallery-layout wrap"><div class="gallery-copy"><p class="eyebrow">{t.galleryKicker}</p><h2 id="gallery-title">{t.galleryTitle}</h2><p class="section-description">{t.galleryBody}</p><div class="gallery-tabs" role="tablist" aria-label={locale === 'en' ? 'Screenshot appearance' : '截图外观'}>{(['light','dark'] as const).map((appearance,i)=><button type="button" id={`tab-${appearance}`} role="tab" data-gallery-tab={appearance} aria-selected={i===0 ? 'true':'false'} aria-controls="gallery-panel menu-gallery-panel" tabindex={i===0 ? 0:-1}><Icon name={appearance==='light'?'sun':'moon'} size={16}/>{t.galleryTabs[i]}</button>)}</div><p class="gallery-note">{t.galleryNote} <span>↗</span></p><figure class="menu-shot" id="menu-gallery-panel" role="tabpanel" aria-labelledby="tab-light" data-gallery-panel><button type="button" id="open-menu-screenshot" aria-label={t.menuAlt} data-caption={t.menuCaption}><img id="menu-screenshot" data-gallery-image src={asset('images/menu-light.png')} data-light-src={asset('images/menu-light.png')} data-dark-src={asset('images/menu-dark.png')} alt={t.menuAlt} width="320" height="264" loading="lazy" /></button><figcaption>{t.menuCaption}</figcaption></figure></div><div class="gallery-frame" id="gallery-panel" role="tabpanel" data-gallery-panel aria-labelledby="tab-light"><button type="button" class="screenshot-button" id="open-screenshot" aria-label={t.enlarge}><img id="app-screenshot" data-gallery-image src={asset('images/settings-light.png')} data-light-src={asset('images/settings-light.png')} data-dark-src={asset('images/settings-dark.png')} alt={locale==='en' ? 'Auralim settings with sunrise, sunset, location and offset controls' : '晨昏设置面板：日出日落时间、位置模式和独立偏移控件'} width="600" height="752" loading="lazy" /></button><p>{t.galleryCaption}</p></div></div></section>
+      <section class="download-section wrap" id="download" aria-labelledby="download-title"><div class="download-decoration" aria-hidden="true"><span></span><span></span><span></span></div><img src={asset('images/app-icon.png')} alt="" width="72" height="72" loading="lazy" /><p class="eyebrow">{t.downloadKicker}</p><h2 id="download-title">{t.downloadTitle}</h2><p>{t.downloadBody}</p><a class="button primary" href={release.dmg}><Icon name="download" size={18}/>{t.download}<span class="button-platform">↗</span></a><div class="download-meta">{t.release} {release.tag}<span>·</span>{releaseSize} MB<span>·</span>macOS 13+</div><div class="download-links"><a href={release.zip}>{t.zip}</a><a href={release.url}>{t.changelog}</a><a href={release.checksums}>{t.checksums}</a></div><p class="download-signing">{t.downloadNote}</p></section>
+      <section class="faq wrap" id="faq" aria-labelledby="faq-title"><div><p class="eyebrow">A FEW LITTLE DETAILS</p><h2 id="faq-title">{t.faqTitle}</h2><a class="text-link" href="https://github.com/frank-yf/auralim-mac/issues">{t.feedback}<Icon name="arrow" size={16}/></a></div><div class="faq-list">{t.faq.map(([question,answer],i)=><details><summary>{question}<span>+</span></summary><div class="faq-answer"><p>{answer}</p>{i===0 && <a href={locale==='en'?'https://support.apple.com/en-us/102445':'https://support.apple.com/zh-cn/102445'} target="_blank" rel="noreferrer">{t.appleHelp}</a>}</div></details>)}</div></section>
+    </main>
+    <footer class="site-footer wrap"><div class="footer-brand"><a class="brand" href={asset()}><img src={asset('images/app-icon.png')} width="28" height="28" alt=""/><span>Auralim</span></a><p>{t.footer}</p></div><div class="footer-links"><span><Icon name="shield" size={14}/>{t.privacy}</span><a href="https://github.com/frank-yf/auralim-mac">GitHub ↗</a><a href="#main">{t.backTop} ↑</a></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Auralim</span><a href="https://github.com/frank-yf/auralim-site">{locale==='en'?'Made with care. Open source.':'认真做的小应用，开放的源代码。'}</a></div></footer>
+    <dialog id="screenshot-dialog" aria-label={t.enlarge}><button type="button" id="close-screenshot" aria-label={t.close}>×</button><img id="dialog-image" src={asset('images/settings-light.png')} alt={locale==='en'?'Enlarged Auralim settings screenshot':'放大的晨昏设置截图'} width="600" height="752"/><p id="dialog-caption">{t.galleryCaption}</p></dialog>
+    <script>import '../lib/client';</script>
+  </body>
+</html>
