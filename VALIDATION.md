@@ -126,3 +126,10 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Type check: zero errors/warnings/hints. Three scoped content/release tests passed. Production-prefix build and bilingual resource verification passed (14 routes/assets).
 - Scoped Chrome checks passed in both languages: system and saved Light/Dark themes, theme icon click/keyboard/reload, primary DMG/backup ZIP URLs, full-resolution asset hash, desktop/mobile artwork sizing, zoom/original link/Escape/focus restoration, screenshot dialog isolation, and 320/390px no-overflow layouts. No browser or resource errors. Evidence: ignored `artifacts/icon-dmg-local.json`, `icon-dmg-check.mjs` and `icon-showcase-*.png`.
 - No full website or native-app regression, actual installation, Apple notarization or Safari/physical-device testing was performed. Publication verification follows below.
+
+
+### Artwork, theme icons and DMG live verification
+
+- [Pages run 39777893668](https://github.com/frank-yf/auralim-site/actions/runs/39777893668) built and deployed `06e133d79eae9e71cd499ac9c0f0524b802e5f93` successfully.
+- Public Chinese/English checks passed for system and saved Light/Dark preferences: Sun/Moon icon state, mouse/keyboard/reload, both primary DMG URLs and ZIP fallback, full-resolution icon sizing, square zoom/original link, Escape/focus restoration, screenshot preview isolation and mobile no-overflow layouts. The public artwork hash matches the original native artwork; there were no page/resource errors.
+- Evidence: ignored `artifacts/icon-dmg-live.json` and showcase/zoom screenshots. The DMG and updated checksum manifest were also downloaded publicly and compared byte-for-byte with verified local artifacts. This documentation-only update does not redeploy Pages.
