@@ -25,3 +25,9 @@ html[data-gallery-ready="false"] [data-gallery-image]{visibility:hidden}
 @media(max-width:570px){.app-icon-showcase{width:200px;height:200px}}
 
 dialog:has(#dialog-original:not([hidden]))>img{max-height:calc(92dvh - 145px)}
+
+/* Native OffsetControl symbols and DuskStyle palette. */
+.native-symbol{display:inline-block;flex:none;background:currentColor;mask:var(--symbol-mask) center/contain no-repeat;-webkit-mask:var(--symbol-mask) center/contain no-repeat}
+.offset-control.sunrise{--symbol-color:rgb(66% 45% 18%)}.offset-control.sunset{--symbol-color:rgb(35% 47% 68%)}
+:root[data-theme=dark] .offset-control.sunrise{--symbol-color:rgb(94% 76% 46%)}:root[data-theme=dark] .offset-control.sunset{--symbol-color:rgb(62% 73% 91%)}
+.offset-symbol-badge{display:inline-flex;align-items:center;justify-content:center;flex:none;width:28px;height:28px;border-radius:8px;color:var(--symbol-color);background:color-mix(in srgb,var(--symbol-color) 12%,transparent)}

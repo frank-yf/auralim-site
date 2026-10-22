@@ -141,3 +141,10 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Type check, production build, bilingual resource validation and the scoped sun/moon orbit test passed.
 - Chrome pixel regression compared the old and new contours at radii 10, 39.52 and 52 CSS pixels, each at 1x and 2x. The old contour produced 19–257 residual cutout pixels; the new contour produced zero in all six cases, with the crescent body retained.
 - Local production-browser verification passed for Chinese/English and light/dark modes: theme animation drawing and direction, rapid replacement/cleanup, keyboard activation, reduced motion, saved theme reload, gallery synchronization and mobile widths. Unrelated app tests were not run.
+
+
+## Native offset symbols — 2026-10-22
+
+- Matched the “Make a little adjustment / 试着调一调” controls to native OffsetControl: `sunrise.fill` and `sunset.fill` in 28px rounded badges, with the exact DuskStyle gold/blue light and dark palettes. Direction hints now use `sun.max.fill` and `moon.fill`.
+- Exported transparent 4x SF Symbol masks with `swift scripts/export-native-symbols.swift`; the shared NativeSymbol component applies theme-aware colors and preserves the GitHub Pages base path. Other website icons were left unchanged.
+- Type check, production build and bilingual resource checks passed. Chrome verified both locales and themes, symbol names, exact colors, 28px badges, all mask asset responses, 320px layout, minute entry and reset. Reviewed light/dark screenshots under `artifacts/offset-symbols-*`. Native application code was unchanged.
