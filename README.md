@@ -11,7 +11,7 @@ npm ci
 make dev
 ```
 
-Open **http://127.0.0.1:4321/** or **http://127.0.0.1:4321/en/**. The server binds only to the local machine. This repository has no automatic deployment workflow; running any command below does not publish the site.
+Open **http://127.0.0.1:4321/** or **http://127.0.0.1:4321/en/**. The server binds only to the local machine. Local development commands do not publish the site. Pushing to `main` runs the GitHub Pages workflow described below.
 
 ```sh
 make check       # Astro / TypeScript
@@ -41,14 +41,22 @@ make build
 
 GitHub is queried only by the update script, never when a visitor opens the website. A failed request leaves the existing release data intact. Download files remain hosted in `auralim-mac` GitHub Releases.
 
-## Future GitHub Pages preparation
+## GitHub Pages
 
-The local preview uses `/`. A project-path build can be checked without deploying:
+The GitHub Actions workflow `.github/workflows/pages.yml` builds and deploys `main`, or can be run manually. Dependencies use the committed lockfile and Node.js 24. Build permissions are read-only; only the deploy job receives Pages and OIDC write permissions.
+
+- 简体中文: https://frank-yf.github.io/auralim-site/
+- English: https://frank-yf.github.io/auralim-site/en/
+
+`actions/configure-pages` supplies the project base path to `SITE_BASE`. Both language routes, CSS/JS, images, language links, canonical URLs and share-image URLs use that prefix. A missing route or resource fails the build before deployment. No custom domain or DNS is configured.
+
+To reproduce the production build locally without deploying:
 
 ```sh
 SITE_BASE=/auralim-site npm run build
+node scripts/check-built-site.mjs /auralim-site/
 npm run preview -- --port 4322
 # http://127.0.0.1:4322/auralim-site/
 ```
 
-No Site registration, publishing, GitHub Pages enablement or DNS changes have been performed. Add deployment only when authorized. The share image is provided as PNG, with its original SVG source retained.
+The default development preview still uses `/`. The share image is provided as PNG, with its original SVG source retained.
