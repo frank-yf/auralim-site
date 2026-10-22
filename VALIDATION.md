@@ -108,3 +108,9 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Type check: zero errors/warnings/hints. Two scoped content/orbit tests passed. Production-prefix build and bilingual generated-resource checks passed.
 - Scoped Chrome checks passed on both languages with initial Light/Dark: absence of demo controls/effect, header click and keyboard activation, correct direction and drawn pixels, fixed half-area bounds while scrolling, pointer passthrough, rapid replacement and timed cleanup, gallery synchronization, live Reduce Motion cancellation, saved-theme reload without playback and 320/390/1440px layout. No page/resource errors. Screenshots were inspected. Evidence: ignored `artifacts/theme-animation-local.json`, `theme-animation-check.mjs` and `theme-animation-*.png`.
 - No full website or native-app regression was run. Deployment verification follows below.
+
+
+### Theme animation live verification
+
+- [Pages run 39772918802](https://github.com/frank-yf/auralim-site/actions/runs/39772918802) built and deployed `dec2ceaf5a56fe9436f93342d3fc6661ba7e8375` successfully.
+- Public-site checks passed in Chinese/English and initial Light/Dark: theme-only playback, removed demo controls/trigger, global fixed overlay and drawn pixels, rapid replacement/cleanup, keyboard activation, gallery sync, Reduce Motion cancellation, saved-theme reload without animation, and mobile widths. No page/resource errors. Evidence: ignored `artifacts/theme-animation-live.json`.
