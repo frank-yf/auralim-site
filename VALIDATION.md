@@ -133,3 +133,11 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - [Pages run 39777893668](https://github.com/frank-yf/auralim-site/actions/runs/39777893668) built and deployed `06e133d79eae9e71cd499ac9c0f0524b802e5f93` successfully.
 - Public Chinese/English checks passed for system and saved Light/Dark preferences: Sun/Moon icon state, mouse/keyboard/reload, both primary DMG URLs and ZIP fallback, full-resolution icon sizing, square zoom/original link, Escape/focus restoration, screenshot preview isolation and mobile no-overflow layouts. The public artwork hash matches the original native artwork; there were no page/resource errors.
 - Evidence: ignored `artifacts/icon-dmg-live.json` and showcase/zoom screenshots. The DMG and updated checksum manifest were also downloaded publicly and compared byte-for-byte with verified local artifacts. This documentation-only update does not redeploy Pages.
+
+
+## Moon animation edge fix — 2026-10-22
+
+- Replaced the overlapping even-odd circles and outer circular clip with one continuous crescent contour, matching the native app fix. The moon glow, orbit, timing and theme-switch behavior remain unchanged.
+- Type check, production build, bilingual resource validation and the scoped sun/moon orbit test passed.
+- Chrome pixel regression compared the old and new contours at radii 10, 39.52 and 52 CSS pixels, each at 1x and 2x. The old contour produced 19–257 residual cutout pixels; the new contour produced zero in all six cases, with the crescent body retained.
+- Local production-browser verification passed for Chinese/English and light/dark modes: theme animation drawing and direction, rapid replacement/cleanup, keyboard activation, reduced motion, saved theme reload, gallery synchronization and mobile widths. Unrelated app tests were not run.

@@ -7,6 +7,18 @@ export function celestialPosition(progress: number, rising: boolean, width: numb
   const angle = start + (end - start) * phase;
   return { x: width * (0.5 + 0.44 * Math.cos(angle)), y: height * (1.005 - 0.705 * Math.sin(angle)) };
 }
+// Trace the crescent as one contour. Clipping two even-odd disks leaves an
+// antialiased full-circle seam along the otherwise transparent cutout.
+export function crescentPath(x: number, y: number, radius: number) {
+  const dx = radius * 0.54, dy = -radius * 0.30;
+  const direction = Math.atan2(dy, dx);
+  const angle = Math.acos(Math.hypot(dx, dy) / (2 * radius));
+  const path = new Path2D();
+  path.arc(x, y, radius, direction - angle, direction + angle, true);
+  path.arc(x + dx, y + dy, radius, direction + Math.PI - angle, direction + Math.PI + angle);
+  path.closePath();
+  return path;
+}
 function ease(phase: number) {
   // Invert the native timing curve's x coordinate: (0.35, 0, 0.25, 1).
   const t = Math.min(1, Math.max(0, phase));
@@ -73,9 +85,7 @@ export function createThemeTransition(canvas: HTMLCanvasElement) {
       const moonGlow = ctx.createRadialGradient(moon.x, moon.y, mr * 0.8, moon.x, moon.y, mr * 2);
       moonGlow.addColorStop(0, 'rgba(199,217,255,.12)'); moonGlow.addColorStop(1, 'rgba(199,217,255,0)');
       ctx.fillStyle = moonGlow; ctx.beginPath(); ctx.arc(moon.x, moon.y, mr * 2, 0, Math.PI * 2); ctx.fill();
-      ctx.save(); ctx.beginPath(); ctx.arc(moon.x, moon.y, mr, 0, Math.PI * 2); ctx.clip();
-      ctx.beginPath(); ctx.arc(moon.x, moon.y, mr, 0, Math.PI * 2); ctx.arc(moon.x + mr * 0.54, moon.y - mr * 0.3, mr, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(224,235,255,.82)'; ctx.fill('evenodd'); ctx.restore(); ctx.restore();
+      ctx.fillStyle = 'rgba(224,235,255,.82)'; ctx.fill(crescentPath(moon.x, moon.y, mr)); ctx.restore();
       const horizonGlow = ctx.createLinearGradient(0, 0, 0, height);
       for (const [at, alpha] of [[0, 0], [0.64, 0], [0.85, 0.12], [0.94, 0.23], [1, 0.08]]) horizonGlow.addColorStop(at, rgba(warmth, alpha));
       ctx.fillStyle = horizonGlow; ctx.fillRect(0, 0, width, height);
