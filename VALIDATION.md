@@ -18,7 +18,7 @@ Initial local-only scope: the new `auralim-site` website. No native application 
 ## Content boundaries
 
 - Demo solar times are explicitly fixed example data, not a real-time astronomical forecast. It never controls macOS appearance or requests browser location.
-- App screenshots use captured SwiftUI UI and example coordinates. Menu captures are explicitly labeled v0.2.5; settings captures include unreleased development-build location changes. Screenshots retain the Simplified Chinese native app interface.
+- App screenshots use captured SwiftUI UI and temporary example preferences. Menu and settings captures are explicitly labeled v0.2.5. Each website language now uses its corresponding native app language, in both light and dark.
 - Current public download metadata was verified against GitHub Releases: v0.2.2 universal DMG / ZIP / SHA256SUMS. The 0.2.5 location cache improvements are explicitly labeled as development-build features.
 - No analytics, remote fonts, browser geolocation or runtime GitHub API request is included. Only the selected website theme is persisted locally.
 - Browser checks were run in Chrome; Safari and physical mobile-device testing were not performed. GitHub Pages publication is intentionally unverified because deployment was not requested.
@@ -56,3 +56,10 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Astro checks: zero errors / warnings / hints. GitHub project-path build passed with 13 unique referenced routes/assets. Build validation now also checks that each route uses its language-specific image sources.
 - Only the gallery language/theme change and related build paths were checked. No full native app or website regression was run.
 - Evidence is retained under ignored artifacts: `gallery-language-theme-local.json`, `gallery-language-theme-check.mjs`, `gallery-en-site-dark.png`, `gallery-zh-CN-site-dark.png`, capture source/log and related type/build logs.
+
+### Live verification of localized gallery and theme defaults
+
+- Published source commit `2bcdea2987b8a465d9bc45bd9bc2fdc98b5f6a22`; [Pages run 39766460586](https://github.com/frank-yf/auralim-site/actions/runs/39766460586) completed successfully.
+- Repeated the scoped gallery checks on the actual public Chinese and English pages: all 13 checks passed, including initial system/saved website themes, global theme changes, manual preview, keyboard, both zoom views, reload, language changes, mobile width and delayed initial dark-image loading. No page or asset-loading errors occurred.
+- All 8 public native menu/settings PNGs returned HTTP 200, had image/png content type, and matched local screenshot SHA-256 values exactly.
+- Evidence: `artifacts/gallery-language-theme-live.json`, `artifacts/gallery-published-assets.json`, and related `auralim-site-gallery-*.log`. Unrelated interactions were not retested.
