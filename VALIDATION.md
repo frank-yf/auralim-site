@@ -148,3 +148,11 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Matched the “Make a little adjustment / 试着调一调” controls to native OffsetControl: `sunrise.fill` and `sunset.fill` in 28px rounded badges, with the exact DuskStyle gold/blue light and dark palettes. Direction hints now use `sun.max.fill` and `moon.fill`.
 - Exported transparent 4x SF Symbol masks with `swift scripts/export-native-symbols.swift`; the shared NativeSymbol component applies theme-aware colors and preserves the GitHub Pages base path. Other website icons were left unchanged.
 - Type check, production build and bilingual resource checks passed. Chrome verified both locales and themes, symbol names, exact colors, 28px badges, all mask asset responses, 320px layout, minute entry and reset. Reviewed light/dark screenshots under `artifacts/offset-symbols-*`. Native application code was unchanged.
+
+
+## v0.3.2 release synchronization — 2026-10-22
+
+- Published native v0.3.2 (build 27, commit `0214be995bd111c5924907920e3e0e6ac35babfb`) as GitHub Latest with universal DMG (7,782,140 bytes), Sparkle ZIP (7,709,416 bytes), signed appcast.xml and SHA256SUMS.txt. DMG contents were mounted and compared to the ZIP; both app architectures, code signatures and Sparkle EdDSA signatures passed.
+- Downloaded all four public assets and matched their hashes against the local artifacts. Verified the stable Latest appcast endpoint advertises 0.3.2/build 27 and the immutable v0.3.2 ZIP URL.
+- Ran release:sync against the published Latest release. Chinese and English pages now advertise v0.3.2, with the DMG as the main download and updated ZIP, release-note and checksum links. The screenshot captions retain their actual capture version.
+- The scoped release metadata test, type check, production build and bilingual route/resource checks passed. This publication reused the 23 passing native tests recorded for the unchanged release commit; no full regression or update-installation test was run.
