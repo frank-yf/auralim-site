@@ -20,12 +20,12 @@ make build       # static output in dist/
 make preview     # serve the built output locally
 ```
 
-The site includes an interactive day/night desktop, Light / Auto / Dark controls, independent ±120-minute offsets, real SwiftUI screenshots, download links and FAQs. Keyboard controls, narrow viewports, website light/dark themes and reduced motion are supported. No tracking, external fonts or browser geolocation is used. The website stores only your chosen website theme in localStorage. Offset controls mirror the native draft/commit, integer parsing, gradient and per-event reset behavior. The optional sun/moon transition preview starts off and honors Reduce Motion; it affects only the web demo.
+The site includes an interactive day/night desktop, Light / Auto / Dark controls, independent ±120-minute offsets, real SwiftUI screenshots, download links and FAQs. Keyboard controls, narrow viewports, website light/dark themes and reduced motion are supported. No tracking, external fonts or browser geolocation is used. The website stores only your chosen website theme in localStorage. Offset controls mirror the native draft/commit, integer parsing, gradient and per-event reset behavior. The website theme button plays a sun/moon transition across the viewport and honors Reduce Motion. The interactive desktop has no animation controls or transition overlay.
 
 ## Content and assets
 
 - `src/i18n/content.ts`: Simplified Chinese and English copy.
-- `src/lib/transition.ts`: optional 3.2-second sun/moon preview using the native east-to-west arcs and centered half-area overlay. Motion is canceled when disabled, hidden, replaced or reduced-motion preferences change.
+- `src/lib/transition.ts`: 3.2-second sun/moon animation for website theme-button changes, using the native east-to-west arcs and a fixed centered half-area viewport overlay. Initial page load does not animate. Motion is canceled when hidden, replaced or reduced-motion preferences change.
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
 - `src/data/screenshots.ts`: captured app version, source commit, and versioned image filenames.
 - `src/data/languages.ts`: the native app’s 12 supported locales, displayed on both website routes. The website remains Simplified Chinese and English.

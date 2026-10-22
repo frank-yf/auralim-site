@@ -44,6 +44,7 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
     </script>
   </head>
   <body data-locale={locale}>
+    <canvas id="theme-transition" class="theme-transition" aria-hidden="true" hidden></canvas>
     <a class="skip-link" href="#main">{t.skip}</a>
     <header class="site-header wrap">
       <a class="brand" href={asset()} aria-label={t.name}><img src={asset('images/app-icon.png')} width="34" height="34" alt="" /><span>Auralim<span class="brand-cn">{locale === 'zh-CN' ? '晨昏' : ''}</span></span></a>
@@ -69,7 +70,6 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
           <div class="orbit-label"><span class="orbit-line"></span>BETWEEN LIGHT AND DARK</div>
           <div class="desktop" data-appearance="light" role="group" aria-label={t.sceneLabel}>
             <Landscape />
-            <canvas id="appearance-transition" class="appearance-transition" aria-hidden="true" hidden></canvas>
             <div class="desktop-menubar"><span class="desktop-wordmark">◈ <b>Finder</b><span>File</span><span>Edit</span></span><span class="menubar-right"><Icon name="sun" size={15} /><span class="status-active"></span><span data-clock>17:20</span></span></div>
             <div class="desktop-caption"><span class="caption-line"></span><span>the quiet hours</span></div>
             <div class="app-panel">
@@ -88,7 +88,6 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
             <div class="timeline-ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
             <div class="demo-shortcuts"><button type="button" data-jump="sunrise"><Icon name="sun" size={14} />{t.riseJump}</button><button type="button" data-jump="sunset"><Icon name="moon" size={14} />{t.setJump}</button><span>{locale === 'en' ? 'drag to explore ↗' : '拖动，感受变化 ↗'}</span></div>
           </div>
-          <div class="transition-demo" aria-labelledby="animation-title"><div class="transition-controls"><label class="transition-toggle" for="animation-toggle"><input type="checkbox" id="animation-toggle" role="switch" aria-describedby="animation-hint reduced-motion-note"/><span id="animation-title">{t.animationTitle}</span></label><div class="transition-actions"><button type="button" data-play-transition="sunrise" disabled><Icon name="sun" size={13}/>{t.animationSunrise}</button><button type="button" data-play-transition="sunset" disabled><Icon name="moon" size={13}/>{t.animationSunset}</button></div></div><p id="animation-hint">{t.animationHint}</p><p id="reduced-motion-note" role="status" hidden>{t.animationReduced}</p></div>
           <p id="demo-note" class="demo-note">{t.demoHint}</p>
         </div>
       </section>

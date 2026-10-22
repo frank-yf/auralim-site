@@ -99,3 +99,12 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - [Pages run 39771871464](https://github.com/frank-yf/auralim-site/actions/runs/39771871464) built and deployed source `d2f3a91ef00779dac66489b22c8a477d676778ef` successfully.
 - Repeated the scoped browser checks against the actual public Chinese/English pages in light/dark themes: all new image paths and zoom views, 中文 switch text, native offset draft/commit and validation, pointer/keyboard controls, gradient directions, animation drawing/replacement/replay/cancellation/reduced motion, and 320–1440px layouts passed. All eight public screenshot hashes matched committed assets; no browser or website resource errors occurred.
 - Live evidence: ignored `artifacts/native-demo-v031-live.json`. Native app source remained at `1c6d135` with a clean worktree. This documentation-only commit is excluded from the Pages deployment trigger.
+
+
+## Website theme-switch animation — 2026-10-22
+
+- Moved the sun/moon canvas from the interactive desktop to a fixed viewport overlay. The website header theme button now plays sunrise when switching to Light and sunset when switching to Dark. Initial load and saved-theme restoration do not animate. The overlay retains the centered 80% × 62.5% geometry and pointer passthrough; rapid clicks replace the prior animation, and Reduce Motion/page hiding cancels it.
+- Removed the demo animation toggle, replay buttons, helper copy and scene-change triggers. Demo appearance and timeline controls no longer start the sun/moon animation. Theme persistence and gallery/offset color synchronization remain active.
+- Type check: zero errors/warnings/hints. Two scoped content/orbit tests passed. Production-prefix build and bilingual generated-resource checks passed.
+- Scoped Chrome checks passed on both languages with initial Light/Dark: absence of demo controls/effect, header click and keyboard activation, correct direction and drawn pixels, fixed half-area bounds while scrolling, pointer passthrough, rapid replacement and timed cleanup, gallery synchronization, live Reduce Motion cancellation, saved-theme reload without playback and 320/390/1440px layout. No page/resource errors. Screenshots were inspected. Evidence: ignored `artifacts/theme-animation-local.json`, `theme-animation-check.mjs` and `theme-animation-*.png`.
+- No full website or native-app regression was run. Deployment verification follows below.

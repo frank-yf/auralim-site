@@ -19,33 +19,25 @@ function ease(phase: number) {
   const p = (low + high) / 2;
   return 3 * (1 - p) * p ** 2 + p ** 3;
 }
-export function createTransitionPreview(scene: HTMLElement, canvas: HTMLCanvasElement, toggle: HTMLInputElement, notice: HTMLElement) {
+export function createThemeTransition(canvas: HTMLCanvasElement) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-play-transition]')];
   const context = canvas.getContext('2d');
   let frame = 0;
   function stop() {
     cancelAnimationFrame(frame); frame = 0;
     canvas.hidden = true;
-    delete scene.dataset.transition;
+    delete canvas.dataset.transition;
     context?.clearRect(0, 0, canvas.width, canvas.height);
   }
-  function syncControls() {
-    buttons.forEach(button => button.disabled = !toggle.checked || reduced.matches);
-    notice.hidden = !reduced.matches;
-    if (!toggle.checked || reduced.matches) stop();
-  }
-  toggle.addEventListener('change', syncControls);
-  reduced.addEventListener('change', syncControls);
+  reduced.addEventListener('change', () => { if (reduced.matches) stop(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
   window.addEventListener('pagehide', stop);
-  syncControls();
   function play(appearance: 'light' | 'dark') {
     stop();
-    if (!context || !toggle.checked || reduced.matches) return;
+    if (!context || reduced.matches) return;
     const ctx = context;
     canvas.hidden = false;
-    scene.dataset.transition = appearance === 'light' ? 'sunrise' : 'sunset';
+    canvas.dataset.transition = appearance === 'light' ? 'sunrise' : 'sunset';
     const started = performance.now();
     function draw(now: number) {
       const elapsed = Math.max(0, now - started);

@@ -1,12 +1,12 @@
 import { content, type Locale } from '../i18n/content';
 import { appearanceAt, example, formatTime, offsetFromTrack, offsetInputText, offsetTrack, parseOffset, type Mode, type SolarEvent } from './demo';
-import { createTransitionPreview } from './transition';
+import { createThemeTransition } from './transition';
 const t = content[document.body.dataset.locale as Locale];
 const get = <T extends Element>(selector: string) => document.querySelector<T>(selector)!;
 const all = <T extends Element>(selector: string) => [...document.querySelectorAll<T>(selector)];
 const timeline = get<HTMLInputElement>('#day-time');
 const scene = get<HTMLElement>('.desktop');
-const transition = createTransitionPreview(scene, get<HTMLCanvasElement>('#appearance-transition'), get<HTMLInputElement>('#animation-toggle'), get<HTMLElement>('#reduced-motion-note'));
+const themeTransition = createThemeTransition(get<HTMLCanvasElement>('#theme-transition'));
 let mode: Mode = 'auto';
 const offsets = { sunrise: 0, sunset: 0 };
 const drafts = { sunrise: 0, sunset: 0 };
@@ -23,12 +23,10 @@ function renderOffset(event: SolarEvent) {
   track.style.setProperty('--offset-color', color);
   track.style.setProperty('--offset-gradient', `linear-gradient(90deg, ${base} 0 ${start}%, ${left} ${start}%, ${right} ${end}%, ${base} ${end}% 100%)`);
 }
-function update(forceTransition = false) {
+function update() {
   const minutes = Number(timeline.value);
   const appearance = appearanceAt(minutes, offsets.sunrise, offsets.sunset, mode);
-  const changed = scene.dataset.appearance !== appearance;
   scene.dataset.appearance = appearance;
-  if (changed || forceTransition) transition.play(appearance);
   const progress = minutes / 1439;
   scene.style.setProperty('--solar-x', `${(progress - 0.5) * 95}px`);
   scene.style.setProperty('--solar-y', `${Math.cos(progress * Math.PI * 2) * 58}px`);
@@ -41,13 +39,13 @@ function update(forceTransition = false) {
   all<HTMLElement>('[data-set]').forEach(el => el.textContent = formatTime(example.sunset + offsets.sunset));
   for (const event of ['sunrise', 'sunset'] as const) renderOffset(event);
 }
-function selectMode(next: Mode, focus = false, forceTransition = false) {
+function selectMode(next: Mode, focus = false) {
   mode = next;
   all<HTMLButtonElement>('[data-mode]').forEach(button => {
     const selected = button.dataset.mode === next;
     button.setAttribute('aria-checked', String(selected)); button.tabIndex = selected ? 0 : -1;
     if (selected && focus) button.focus();
-  }); update(forceTransition);
+  }); update();
 }
 all<HTMLButtonElement>('[data-mode]').forEach((button,index) => {
   button.addEventListener('click', () => selectMode(button.dataset.mode as Mode));
@@ -93,22 +91,18 @@ all<HTMLButtonElement>('[data-jump]').forEach(button => button.addEventListener(
   const event = button.dataset.jump as SolarEvent;
   timeline.value = String(example[event] + offsets[event]); selectMode('auto');
 }));
-all<HTMLButtonElement>('[data-play-transition]').forEach(button => button.addEventListener('click', () => {
-  const event = button.dataset.playTransition as SolarEvent;
-  timeline.value = String(example[event] + offsets[event]);
-  selectMode('auto', false, true);
-  scene.scrollIntoView({ block: 'nearest', behavior: 'auto' });
-}));
 const themeButton = get<HTMLButtonElement>('.theme-button');
-function setTheme(dark: boolean) {
+function setTheme(dark: boolean, animate = false) {
+  const changed = document.documentElement.dataset.theme !== (dark ? 'dark' : 'light');
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   themeButton.setAttribute('aria-pressed', String(dark));
   get<HTMLMetaElement>('meta[name="theme-color"]').content = dark ? '#171c27' : '#f7f6f2';
   const tab = tabs.find(button => button.dataset.galleryTab === (dark ? 'dark' : 'light'));
   if (tab) selectScreenshot(tab);
   for (const event of ['sunrise', 'sunset'] as const) renderOffset(event);
+  if (animate && changed) themeTransition.play(dark ? 'dark' : 'light');
 }
-themeButton.addEventListener('click', () => { const dark = document.documentElement.dataset.theme !== 'dark'; setTheme(dark); try { localStorage.setItem('auralim-site-theme', dark ? 'dark' : 'light'); } catch {} });
+themeButton.addEventListener('click', () => { const dark = document.documentElement.dataset.theme !== 'dark'; setTheme(dark, true); try { localStorage.setItem('auralim-site-theme', dark ? 'dark' : 'light'); } catch {} });
 const image = get<HTMLImageElement>('#app-screenshot');
 const dialog = get<HTMLDialogElement>('#screenshot-dialog');
 const tabs = all<HTMLButtonElement>('[data-gallery-tab]');
