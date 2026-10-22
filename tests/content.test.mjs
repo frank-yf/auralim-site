@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { content, locales } from '../src/i18n/content.ts';
+import { supportedAppLanguages } from '../src/data/languages.ts';
 
 test('only simplified Chinese and English ship with matching content structure', () => {
   assert.deepEqual([...locales],['zh-CN','en']);
@@ -14,10 +15,11 @@ test('only simplified Chinese and English ship with matching content structure',
     for (const value of Object.values(content[locale])) assert.ok(value.length>0);
   }
 });
-test('download metadata refers to a published universal release, not the development version', async () => {
+test('download metadata supports a universal ZIP release without a DMG', async () => {
   const release=JSON.parse(await readFile(new URL('../src/data/release.json',import.meta.url),'utf8'));
   assert.match(release.tag,/^v\d+\.\d+\.\d+$/);
   for (const [field,suffix] of [['dmg','.dmg'],['zip','.zip'],['checksums','SHA256SUMS.txt']]) {
+    if (field === 'dmg' && release.dmg === null) continue;
     const url=new URL(release[field]);
     assert.equal(url.hostname,'github.com');
     assert.ok(url.pathname.startsWith(`/frank-yf/auralim-mac/releases/download/${release.tag}/`));
@@ -25,4 +27,9 @@ test('download metadata refers to a published universal release, not the develop
     if(field!=='checksums') assert.ok(url.pathname.includes('universal'));
   }
   assert.ok(release.size>0);
+});
+
+test('app language list contains all 12 supported locales in release order', () => {
+  assert.deepEqual(supportedAppLanguages.map(language => language.locale), ['en','zh-Hans','ja','zh-Hant','de','fr','es','pt-BR','ko','it','ru','nl']);
+  assert.equal(new Set(supportedAppLanguages.map(language => language.name)).size,12);
 });

@@ -63,3 +63,13 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Repeated the scoped gallery checks on the actual public Chinese and English pages: all 13 checks passed, including initial system/saved website themes, global theme changes, manual preview, keyboard, both zoom views, reload, language changes, mobile width and delayed initial dark-image loading. No page or asset-loading errors occurred.
 - All 8 public native menu/settings PNGs returned HTTP 200, had image/png content type, and matched local screenshot SHA-256 values exactly.
 - Evidence: `artifacts/gallery-language-theme-live.json`, `artifacts/gallery-published-assets.json`, and related `auralim-site-gallery-*.log`. Unrelated interactions were not retested.
+
+
+## v0.3.1 release and twelve-language support — 2026-10-22
+
+- Synced public release metadata from GitHub Latest: v0.3.1, universal ZIP (7,703,817 bytes), and SHA256SUMS.txt. The release has no DMG; the sync script accepts that case and both primary download buttons use the ZIP. Installation instructions now describe extracting the archive.
+- Both website languages list all 12 app locales with native names: en, zh-Hans, ja, zh-Hant, de, fr, es, pt-BR, ko, it, ru, nl. The language list explains immediate switching, system matching and English fallback. Website navigation remains bilingual.
+- Location improvements are labeled as included in the current release, with the version read from release metadata. Existing v0.2.5 screenshot captions remain accurate to their original captures.
+- `npm run check`: 0 errors, warnings or hints. Scoped `tests/content.test.mjs`: 3 tests passed. Production-prefix build and generated-page verification passed for both routes and 13 local routes/assets; generated pages verify both primary download URLs and all twelve locale entries.
+- Scoped Chrome checks passed on Chinese/English pages in light/dark themes at 320, 390 and 1440px: current release and size, both ZIP download buttons, complete locale list, no document or list-item overflow, and no page/resource errors. Representative language-list screenshots were inspected. Evidence: ignored `artifacts/release-031-local.json` and `artifacts/languages-031-*.png`.
+- No native app changes or full website interaction regression were performed. Deployment verification will be recorded separately after publication.

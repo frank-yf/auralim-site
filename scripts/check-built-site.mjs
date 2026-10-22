@@ -6,10 +6,18 @@ const root = resolve('dist');
 const base = `/${(process.argv[2] || '').replace(/^\/+|\/+$/g, '')}`.replace(/\/?$/, '/');
 const site = new URL(base, 'https://frank-yf.github.io');
 const resources = new Set();
+const release = JSON.parse(await readFile('src/data/release.json', 'utf8'));
+const { supportedAppLanguages } = await import('../src/data/languages.ts');
 for (const [path, language] of [['', 'zh-CN'], ['en/', 'en']]) {
   const html = await readFile(resolve(root, path, 'index.html'), 'utf8');
   assert.match(html, new RegExp(`<html[^>]*lang="${language}"`));
   const page = new URL(path, site);
+  const download = release.dmg ?? release.zip;
+  assert.ok(html.includes(release.tag), 'Missing current release version');
+  assert.ok(html.split(`href="${download}"`).length - 1 >= 2, 'Hero and footer must use the current downloadable package');
+  assert.equal((html.match(/data-app-locale=/g) ?? []).length, 12);
+  for (const language of supportedAppLanguages) assert.ok(html.includes(`data-app-locale="${language.locale}"`));
+
   const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/);
   assert.equal(canonical?.[1], page.href, `Incorrect canonical URL for ${language}`);
   for (const [id, kind] of [['menu-screenshot', 'menu'], ['app-screenshot', 'settings']]) {
