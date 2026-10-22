@@ -15,7 +15,7 @@ test('only simplified Chinese and English ship with matching content structure',
     for (const value of Object.values(content[locale])) assert.ok(value.length>0);
   }
 });
-test('download metadata supports a universal ZIP release without a DMG', async () => {
+test('download metadata points to published universal packages', async () => {
   const release=JSON.parse(await readFile(new URL('../src/data/release.json',import.meta.url),'utf8'));
   assert.match(release.tag,/^v\d+\.\d+\.\d+$/);
   for (const [field,suffix] of [['dmg','.dmg'],['zip','.zip'],['checksums','SHA256SUMS.txt']]) {

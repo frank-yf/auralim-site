@@ -114,3 +114,15 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 
 - [Pages run 39772918802](https://github.com/frank-yf/auralim-site/actions/runs/39772918802) built and deployed `dec2ceaf5a56fe9436f93342d3fc6661ba7e8375` successfully.
 - Public-site checks passed in Chinese/English and initial Light/Dark: theme-only playback, removed demo controls/trigger, global fixed overlay and drawn pixels, rapid replacement/cleanup, keyboard activation, gallery sync, Reduce Motion cancellation, saved-theme reload without animation, and mobile widths. No page/resource errors. Evidence: ignored `artifacts/theme-animation-live.json`.
+
+
+## Theme icons, DMG download and large artwork — 2026-10-22
+
+- Header theme icons follow the current theme through CSS: Sun in Light, Moon in Dark, including the inline initial system/saved preference before client initialization. Click, keyboard activation and reload keep them synchronized.
+- Added the unchanged 1254 × 1254 native artwork as `app-icon-large.png`, rendered at 264px on desktop and 200px on small screens in the download section. It opens a square enlarged preview with a full-resolution artwork link. Preview closing restores focus; screenshot previews hide the original-art link. Both languages and themes were visually inspected.
+- v0.3.1 previously supplied only the Sparkle ZIP. Generated `Auralim-0.3.1-macos-universal.dmg` (7,773,754 bytes) from the exact published ZIP, containing the app and an Applications link. `hdiutil verify`, read-only mounting, full mounted/extracted file-and-symlink comparison, strict code signature and arm64/x86_64 checks passed. The DMG contains 0.3.1 (build 26), without rebuilding or modifying native application code.
+- Added the DMG to the existing Latest v0.3.1 Release and updated SHA256SUMS.txt to include DMG, ZIP and appcast. Existing signed ZIP and appcast asset IDs/digests were unchanged. Public DMG and checksum downloads matched local bytes; all three checksums passed. Evidence: ignored `artifacts/dmg-v031-verification.log` and `release-v031-dmg-assets.json`.
+- Synced website release metadata: both primary download buttons now use DMG, the secondary ZIP link remains, download metadata identifies DMG/7.8 MB, and both installation answers explain DMG with ZIP as an alternative.
+- Type check: zero errors/warnings/hints. Three scoped content/release tests passed. Production-prefix build and bilingual resource verification passed (14 routes/assets).
+- Scoped Chrome checks passed in both languages: system and saved Light/Dark themes, theme icon click/keyboard/reload, primary DMG/backup ZIP URLs, full-resolution asset hash, desktop/mobile artwork sizing, zoom/original link/Escape/focus restoration, screenshot dialog isolation, and 320/390px no-overflow layouts. No browser or resource errors. Evidence: ignored `artifacts/icon-dmg-local.json`, `icon-dmg-check.mjs` and `icon-showcase-*.png`.
+- No full website or native-app regression, actual installation, Apple notarization or Safari/physical-device testing was performed. Publication verification follows below.

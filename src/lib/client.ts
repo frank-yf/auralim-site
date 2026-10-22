@@ -125,12 +125,18 @@ tabs.forEach((button, index) => {
   button.addEventListener('click', () => selectScreenshot(button));
   button.addEventListener('keydown', event => { if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return; event.preventDefault(); selectScreenshot(tabs[event.key === 'Home' ? 0 : event.key === 'End' ? 1 : 1 - index], true); });
 });
-function showScreenshot(src: string, alt: string, caption: string) {
+function showScreenshot(src: string, alt: string, caption: string, original = false) {
   const fullImage = get<HTMLImageElement>('#dialog-image');
   fullImage.src = src; fullImage.alt = alt;
   get('#dialog-caption').textContent = caption;
+  get<HTMLElement>('#dialog-original').hidden = !original;
+  dialog.setAttribute('aria-label', alt);
   dialog.showModal();
 }
+get('#open-app-icon').addEventListener('click', () => {
+  const icon = get<HTMLImageElement>('#open-app-icon img');
+  showScreenshot(icon.src, t.iconEnlarge, t.iconCaption, true);
+});
 get('#open-screenshot').addEventListener('click', () => showScreenshot(image.src, image.alt, t.galleryCaption));
 get('#open-menu-screenshot').addEventListener('click', () => {
   const menu = get<HTMLImageElement>('.menu-shot img');
