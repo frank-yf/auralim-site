@@ -92,3 +92,10 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Scoped Chrome verification passed for both languages × light/dark: correct versioned images and zoom, draft versus applied time, invalid/empty/fractional input, clamping, Unicode minus, independent reset, real pointer dragging, arrow/Alt-arrow input, all four gradient directions, drawn canvas pixels, rapid replacement, explicit replay, stop-on-disable, timed cleanup, no animation on unchanged appearance and live Reduce Motion cancellation. Layouts at 320/390/768/1440px had no horizontal overflow; there were no page/resource errors. All 8 served PNG hashes matched source assets.
 - Evidence under ignored artifacts: `native-demo-v031-local.json`, `native-demo-v031-check.mjs`, `native-capture-v031.json`, `WebsiteCapture-v031.swift`, and `v031-*.png`. Representative native captures, gradients, animation frames and mobile layouts were visually inspected.
 - This was scoped website verification and native capture only, not a native app regression. Safari and physical mobile-device testing were not performed. Publication is verified separately below.
+
+
+### Native UI demo live verification
+
+- [Pages run 39771871464](https://github.com/frank-yf/auralim-site/actions/runs/39771871464) built and deployed source `d2f3a91ef00779dac66489b22c8a477d676778ef` successfully.
+- Repeated the scoped browser checks against the actual public Chinese/English pages in light/dark themes: all new image paths and zoom views, 中文 switch text, native offset draft/commit and validation, pointer/keyboard controls, gradient directions, animation drawing/replacement/replay/cancellation/reduced motion, and 320–1440px layouts passed. All eight public screenshot hashes matched committed assets; no browser or website resource errors occurred.
+- Live evidence: ignored `artifacts/native-demo-v031-live.json`. Native app source remained at `1c6d135` with a clean worktree. This documentation-only commit is excluded from the Pages deployment trigger.
