@@ -8,6 +8,7 @@ const site = new URL(base, 'https://frank-yf.github.io');
 const resources = new Set();
 const release = JSON.parse(await readFile('src/data/release.json', 'utf8'));
 const { supportedAppLanguages } = await import('../src/data/languages.ts');
+const { screenshotFile } = await import('../src/data/screenshots.ts');
 for (const [path, language] of [['', 'zh-CN'], ['en/', 'en']]) {
   const html = await readFile(resolve(root, path, 'index.html'), 'utf8');
   assert.match(html, new RegExp(`<html[^>]*lang="${language}"`));
@@ -25,7 +26,7 @@ for (const [path, language] of [['', 'zh-CN'], ['en/', 'en']]) {
     assert.ok(image, `Missing ${kind} capture for ${language}`);
     for (const [attribute, appearance] of [['src', 'light'], ['data-light-src', 'light'], ['data-dark-src', 'dark']]) {
       const value = image.match(new RegExp(`(?:^|\\s)${attribute}="([^"]+)"`))?.[1];
-      const name = `${kind}${language === 'en' ? '-en' : ''}-${appearance}.png`;
+      const name = screenshotFile(kind, language, appearance);
       assert.equal(value, new URL(`images/${name}`, site).pathname, `Wrong screenshot language/path: ${language} ${attribute}`);
     }
   }

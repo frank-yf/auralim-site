@@ -20,17 +20,19 @@ make build       # static output in dist/
 make preview     # serve the built output locally
 ```
 
-The site includes an interactive day/night desktop, Light / Auto / Dark controls, independent ±120-minute offsets, real SwiftUI screenshots, download links and FAQs. Keyboard controls, narrow viewports, website light/dark themes and reduced motion are supported. No tracking, external fonts or browser geolocation is used. The website stores only your chosen website theme in localStorage.
+The site includes an interactive day/night desktop, Light / Auto / Dark controls, independent ±120-minute offsets, real SwiftUI screenshots, download links and FAQs. Keyboard controls, narrow viewports, website light/dark themes and reduced motion are supported. No tracking, external fonts or browser geolocation is used. The website stores only your chosen website theme in localStorage. Offset controls mirror the native draft/commit, integer parsing, gradient and per-event reset behavior. The optional sun/moon transition preview starts off and honors Reduce Motion; it affects only the web demo.
 
 ## Content and assets
 
 - `src/i18n/content.ts`: Simplified Chinese and English copy.
+- `src/lib/transition.ts`: optional 3.2-second sun/moon preview using the native east-to-west arcs and centered half-area overlay. Motion is canceled when disabled, hidden, replaced or reduced-motion preferences change.
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
+- `src/data/screenshots.ts`: captured app version, source commit, and versioned image filenames.
 - `src/data/languages.ts`: the native app’s 12 supported locales, displayed on both website routes. The website remains Simplified Chinese and English.
 - `src/data/release.json`: verified public download metadata. Current public release is v0.3.1 (universal ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
 - `public/images/app-icon.png`: from the native app's tracked icon resource.
-- `public/images/settings-*.png`: native v0.2.5 settings captures using temporary example preferences. English pages use `settings-en-*.png`; Chinese pages use `settings-*.png`. No user location or account information is present.
-- `public/images/menu-*.png`: matching light/dark captures of the v0.2.5 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. English pages use `menu-en-*.png`; Chinese pages use `menu-*.png`. Both menu and settings images initially follow the website theme and resynchronize when that theme changes. Manual gallery preview and zoom remain available.
+- `public/images/settings-*.png`: native v0.3.1 settings captures using temporary example preferences. English pages use `settings-v0.3.1-en-*.png`; Chinese pages use `settings-v0.3.1-*.png`. No user location or account information is present.
+- `public/images/menu-*.png`: matching light/dark captures of the v0.3.1 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. English pages use `menu-v0.3.1-en-*.png`; Chinese pages use `menu-v0.3.1-*.png`. Both menu and settings images initially follow the website theme and resynchronize when that theme changes. Manual gallery preview and zoom remain available.
 - `src/components/Landscape.astro`: original SVG desktop illustration.
 
 Update download information explicitly, then rebuild:

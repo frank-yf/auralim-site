@@ -2,6 +2,7 @@
 import { content, type Locale } from '../i18n/content';
 import release from '../data/release.json';
 import { supportedAppLanguages } from '../data/languages';
+import { screenshotFile } from '../data/screenshots';
 import Icon from './Icon.astro';
 import Landscape from './Landscape.astro';
 import '../styles/global.css';
@@ -11,7 +12,7 @@ const t = content[locale];
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const asset = (path = '') => `${base}/${path}`;
 const screenshot = (kind: 'menu' | 'settings', appearance: 'light' | 'dark') =>
-  asset(`images/${kind}${locale === 'en' ? '-en' : ''}-${appearance}.png`);
+  asset(`images/${screenshotFile(kind, locale, appearance)}`);
 const canonical = new URL(asset(locale === 'en' ? 'en/' : ''), Astro.site);
 const downloadURL = release.dmg ?? release.zip;
 const releaseSize = (release.size / 1_000_000).toFixed(1);
@@ -48,7 +49,7 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
       <a class="brand" href={asset()} aria-label={t.name}><img src={asset('images/app-icon.png')} width="34" height="34" alt="" /><span>Auralim<span class="brand-cn">{locale === 'zh-CN' ? '晨昏' : ''}</span></span></a>
       <nav class="main-nav" aria-label={locale === 'en' ? 'Main navigation' : '主导航'}><a href="#experience">{t.nav[0]}</a><a href="#details">{t.nav[1]}</a><a href="#faq">{t.nav[2]}</a></nav>
       <div class="header-tools">
-        <div class="language-switch" aria-label={t.language}><a href={asset()} lang="zh-CN" aria-current={locale === 'zh-CN' ? 'page' : undefined}>简中</a><span>/</span><a href={asset('en/')} lang="en" aria-current={locale === 'en' ? 'page' : undefined}>EN</a></div>
+        <div class="language-switch" aria-label={t.language}><a href={asset()} lang="zh-CN" aria-current={locale === 'zh-CN' ? 'page' : undefined}>中文</a><span>/</span><a href={asset('en/')} lang="en" aria-current={locale === 'en' ? 'page' : undefined}>EN</a></div>
         <button class="icon-button theme-button" aria-label={t.theme} aria-pressed="false"><Icon name="sun" /></button>
         <a class="header-download" href="#download">{locale === 'en' ? 'Get Auralim' : '下载'} <Icon name="arrow" size={15} /></a>
       </div>
@@ -68,6 +69,7 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
           <div class="orbit-label"><span class="orbit-line"></span>BETWEEN LIGHT AND DARK</div>
           <div class="desktop" data-appearance="light" role="group" aria-label={t.sceneLabel}>
             <Landscape />
+            <canvas id="appearance-transition" class="appearance-transition" aria-hidden="true" hidden></canvas>
             <div class="desktop-menubar"><span class="desktop-wordmark">◈ <b>Finder</b><span>File</span><span>Edit</span></span><span class="menubar-right"><Icon name="sun" size={15} /><span class="status-active"></span><span data-clock>17:20</span></span></div>
             <div class="desktop-caption"><span class="caption-line"></span><span>the quiet hours</span></div>
             <div class="app-panel">
@@ -86,17 +88,19 @@ const releaseSize = (release.size / 1_000_000).toFixed(1);
             <div class="timeline-ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
             <div class="demo-shortcuts"><button type="button" data-jump="sunrise"><Icon name="sun" size={14} />{t.riseJump}</button><button type="button" data-jump="sunset"><Icon name="moon" size={14} />{t.setJump}</button><span>{locale === 'en' ? 'drag to explore ↗' : '拖动，感受变化 ↗'}</span></div>
           </div>
+          <div class="transition-demo" aria-labelledby="animation-title"><div class="transition-controls"><label class="transition-toggle" for="animation-toggle"><input type="checkbox" id="animation-toggle" role="switch" aria-describedby="animation-hint reduced-motion-note"/><span id="animation-title">{t.animationTitle}</span></label><div class="transition-actions"><button type="button" data-play-transition="sunrise" disabled><Icon name="sun" size={13}/>{t.animationSunrise}</button><button type="button" data-play-transition="sunset" disabled><Icon name="moon" size={13}/>{t.animationSunset}</button></div></div><p id="animation-hint">{t.animationHint}</p><p id="reduced-motion-note" role="status" hidden>{t.animationReduced}</p></div>
           <p id="demo-note" class="demo-note">{t.demoHint}</p>
         </div>
       </section>
       <div class="signature wrap"><span>{locale === 'en' ? 'Made for the way you use your Mac.' : '让 Mac 的每一天，多一点自然。'}</span><div>{t.signature.map((label, i) => <span><Icon name={['spark','sun','globe'][i]} size={16} />{label}</span>)}</div></div>
       <section class="rhythm wrap" id="rhythm" aria-labelledby="rhythm-title">
         <div class="section-copy"><p class="eyebrow">{t.rhythmKicker}</p><h2 id="rhythm-title">{t.rhythmTitle}</h2><p class="section-description">{t.rhythmBody}</p><div class="rhythm-illustration" aria-hidden="true"><span class="little-sun"></span><span class="dotted-arc"></span><span class="little-moon">☾</span><span class="arc-time">06:12 <span>—</span> 17:58</span></div><p class="example-note">{t.fixedExample}</p></div>
-        <div class="offset-card"><div class="offset-card-head"><span>{t.offsetTitle}</span><button type="button" id="reset-offsets">↺ {t.reset}</button></div>
+        <div class="offset-card"><div class="offset-card-head"><span>{t.offsetTitle}</span></div>
           {(['sunrise', 'sunset'] as const).map((event, index) => <div class:list={['offset-control',event]} data-event={event}>
-            <div class="offset-head"><label for={`${event}-offset`}><Icon name={index === 0 ? 'sun' : 'moon'} size={18} />{t.offsetLabels[index]}</label><output data-offset-description={event}>{t.onTime}</output></div>
-            <div class="offset-input-row"><input type="range" id={`${event}-offset`} min="-120" max="120" step="1" value="0" data-offset-track={event} aria-label={t.offsetLabels[index]} aria-describedby="offset-note" /><div class="number-input"><input type="number" id={`${event}-minutes`} min="-120" max="120" step="1" value="0" inputmode="numeric" data-offset-input={event} aria-label={`${t.offsetLabels[index]} (${t.minute})`} /><span>{t.minute}</span></div></div>
-            <div class="offset-directions"><span>{index === 0 ? t.sunriseLeft : t.sunsetLeft}</span><span>0</span><span>{index === 0 ? t.sunriseRight : t.sunsetRight}</span></div>
+            <div class="offset-head"><label for={`${event}-offset`}><Icon name={index === 0 ? 'sun' : 'moon'} size={18} />{t.offsetLabels[index]}</label><output data-offset-description={event}>{t.onTime}</output><button type="button" data-reset-offset={event}>{t.reset}</button></div>
+            <div class="offset-input-row"><input type="range" id={`${event}-offset`} min="-120" max="120" step="1" value="0" data-offset-track={event} aria-label={t.offsetLabels[index]} aria-describedby="offset-note" /><div class="number-input"><input type="text" id={`${event}-minutes`} aria-invalid="false" aria-describedby={`offset-note ${event}-error`} value="0" inputmode="numeric" data-offset-input={event} aria-label={`${t.offsetLabels[index]} (${t.minute})`} /><span>{t.minute}</span></div></div>
+            <div class="offset-directions"><span><Icon name={index === 0 ? "moon" : "sun"} size={11}/>{index === 0 ? t.sunriseLeft : t.sunsetLeft}</span><span>0</span><span><Icon name={index === 0 ? "sun" : "moon"} size={11}/>{index === 0 ? t.sunriseRight : t.sunsetRight}</span></div>
+            <p id={`${event}-error`} class="offset-error" role="status" hidden>{t.offsetInvalid}</p>
           </div>)}
           <div class="adjusted-times" aria-live="polite" aria-atomic="true"><div><span>{t.sunrise}</span><strong data-rise>06:12</strong></div><span>→</span><div><span>{t.sunset}</span><strong data-set>17:58</strong></div></div><p id="offset-note">{t.offsetNote}</p>
         </div>
