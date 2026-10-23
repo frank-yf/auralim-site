@@ -1,5 +1,14 @@
 # Website validation — 2026-10-22
 
+## Chinese rebrand to 晦明 / native v0.4.1 — 2026-10-23
+
+- Updated the Chinese name to 晦明 in the header, hero demo, page/OG title, image descriptions, FAQ, download copy and footer. Chinese slogan: 晦明变化，循日而行。 English name and slogan remain Auralim / Between light and dark.
+- Replaced the eight previous v0.3.1 menu/settings screenshots with real v0.4.1 light/dark captures in Simplified Chinese and English. Source: native commit `e259bc3b84c86f01c935afd49b45b151d5a38600`, build 29. Temporary preferences, fixed example dates, mock appearance/location/login services and an unstarted updater prevent user data or permission/network side effects. The screenshot captions and metadata now identify v0.4.1.
+- Updated both SVG source and PNG social card. Public download metadata remains v0.3.2; this change does not publish a v0.4.1 installer or Release.
+- `npm run check`: 0 errors, warnings or hints. `SITE_BASE=/auralim-site npm run build` succeeds; `node scripts/check-built-site.mjs /auralim-site/` verifies both language routes and 14 unique local routes/assets. Logs: `artifacts/branding-0.4.1/build.log`, `paths.log`.
+- Targeted Chrome checks on the existing local preview passed four locale/theme combinations (zh-CN/en × light/dark): new names and exact slogans/titles, localized v0.4.1 gallery assets and dimensions, zoom, language navigation, unchanged public download links, and no horizontal overflow at 320/390/1440px. No page exceptions or local HTTP errors. Evidence: `artifacts/branding-0.4.1/browser.json` and corresponding hero/gallery screenshots.
+- Visually inspected the new Chinese hero and social card, along with the native Simplified Chinese light and Traditional Chinese dark settings captures. No unrelated offset or animation regression suite was run. This is a local source/build update; no push, GitHub Pages deployment or live-site verification was performed.
+
 Initial local-only scope: the new `auralim-site` website. No native application code was changed or globally retested. At that stage no remote deployment, GitHub Pages configuration, push, Site registration or DNS change was performed. The subsequent GitHub Pages deployment is recorded below.
 
 ## Passed

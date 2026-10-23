@@ -1,4 +1,4 @@
-# Auralim website / 晨昏产品官网
+# Auralim website / 晦明产品官网
 
 A bilingual product showcase for [Auralim](https://github.com/frank-yf/auralim-mac), built with Astro, TypeScript and CSS. 简体中文默认首页，英文 `/en/`。
 
@@ -29,11 +29,11 @@ The site includes an interactive day/night desktop, Light / Auto / Dark controls
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
 - `src/data/screenshots.ts`: captured app version, source commit, and versioned image filenames.
 - `src/data/languages.ts`: the native app’s 12 supported locales, displayed on both website routes. The website remains Simplified Chinese and English.
-- `src/data/release.json`: verified public download metadata. Current public release is v0.3.1 (universal DMG and ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
+- `src/data/release.json`: verified public download metadata. Current public release is v0.3.2 (universal DMG and ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
 - `public/images/app-icon.png`: small app icon from the native app’s tracked icon resource.
 - `public/images/app-icon-large.png`: unchanged 1254px native icon artwork for the large download-section showcase, zoom dialog and original-image link.
-- `public/images/settings-*.png`: native v0.3.1 settings captures using temporary example preferences. English pages use `settings-v0.3.1-en-*.png`; Chinese pages use `settings-v0.3.1-*.png`. No user location or account information is present.
-- `public/images/menu-*.png`: matching light/dark captures of the v0.3.1 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. English pages use `menu-v0.3.1-en-*.png`; Chinese pages use `menu-v0.3.1-*.png`. Both menu and settings images initially follow the website theme and resynchronize when that theme changes. Manual gallery preview and zoom remain available.
+- `public/images/settings-*.png`: native v0.4.1 settings captures using temporary example preferences. English pages use `settings-v0.4.1-en-*.png`; Chinese pages use `settings-v0.4.1-*.png`. No user location or account information is present.
+- `public/images/menu-*.png`: matching light/dark captures of the v0.4.1 native menu view, rendered from the committed app source with temporary example preferences and a mock appearance service. English pages use `menu-v0.4.1-en-*.png`; Chinese pages use `menu-v0.4.1-*.png`. Both menu and settings images initially follow the website theme and resynchronize when that theme changes. Manual gallery preview and zoom remain available.
 - `src/components/Landscape.astro`: original SVG desktop illustration.
 
 Update download information explicitly, then rebuild:
