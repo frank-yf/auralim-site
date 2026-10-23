@@ -29,7 +29,7 @@ The site includes an interactive day/night desktop, Light / Auto / Dark controls
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
 - `src/data/screenshots.ts`: captured app version, source commit, and versioned image filenames.
 - `src/data/languages.ts`: the native app’s 12 supported locales, displayed on both website routes. The website remains Simplified Chinese and English.
-- `src/data/release.json`: verified public download metadata. Current public release is v0.3.2 (universal DMG and ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
+- `src/data/release.json`: verified public download metadata. Current public release is v0.4.1 (universal DMG and ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
 - `public/images/app-icon.png`: small app icon from the native app’s tracked icon resource.
 - `public/images/app-icon-large.png`: unchanged 1254px native icon artwork for the large download-section showcase, zoom dialog and original-image link.
 - `public/images/settings-*.png`: native v0.4.1 settings captures using temporary example preferences. English pages use `settings-v0.4.1-en-*.png`; Chinese pages use `settings-v0.4.1-*.png`. No user location or account information is present.

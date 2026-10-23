@@ -1,5 +1,12 @@
 # Website validation — 2026-10-22
 
+## v0.4.1 release download update — 2026-10-23
+
+- After publishing the native v0.4.1 GitHub Release and verifying all four public assets plus the Latest appcast endpoint, ran `npm run release:sync`. Primary buttons now use the 7,790,487-byte universal DMG; ZIP, release notes and checksums point to the same immutable v0.4.1 tag. The earlier 晦明 rebrand and v0.4.1 screenshots are included in this push.
+- Targeted download-metadata test: 1 passed. Production project-path build and both language routes/14 local routes/assets passed. Logs: `artifacts/release-0.4.1/tests.log`, `build.log`, `paths.log`.
+- Four local Chrome combinations (zh-CN/en × light/dark) passed: new brand and slogan, v0.4.1/7.8 MB release text, both primary DMG links, matching localized gallery assets/zoom, language switching, and no overflow at 320/390/1440px. No page errors or local HTTP failures. Evidence: `artifacts/release-0.4.1/browser-local.json`.
+- This commit is ready for GitHub Pages deployment; live deployment and verification are recorded separately once complete. No unrelated global regression tests were run.
+
 ## Chinese rebrand to 晦明 / native v0.4.1 — 2026-10-23
 
 - Updated the Chinese name to 晦明 in the header, hero demo, page/OG title, image descriptions, FAQ, download copy and footer. Chinese slogan: 晦明变化，循日而行。 English name and slogan remain Auralim / Between light and dark.
