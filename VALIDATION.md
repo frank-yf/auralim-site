@@ -5,7 +5,9 @@
 - After publishing the native v0.4.1 GitHub Release and verifying all four public assets plus the Latest appcast endpoint, ran `npm run release:sync`. Primary buttons now use the 7,790,487-byte universal DMG; ZIP, release notes and checksums point to the same immutable v0.4.1 tag. The earlier 晦明 rebrand and v0.4.1 screenshots are included in this push.
 - Targeted download-metadata test: 1 passed. Production project-path build and both language routes/14 local routes/assets passed. Logs: `artifacts/release-0.4.1/tests.log`, `build.log`, `paths.log`.
 - Four local Chrome combinations (zh-CN/en × light/dark) passed: new brand and slogan, v0.4.1/7.8 MB release text, both primary DMG links, matching localized gallery assets/zoom, language switching, and no overflow at 320/390/1440px. No page errors or local HTTP failures. Evidence: `artifacts/release-0.4.1/browser-local.json`.
-- This commit is ready for GitHub Pages deployment; live deployment and verification are recorded separately once complete. No unrelated global regression tests were run.
+- Deployed commit `7cdcfe4a4e221f0372b0a32cdf541f34e9e49b34` through GitHub Pages run [39894985752](https://github.com/frank-yf/auralim-site/actions/runs/39894985752); build and deploy both succeeded. The preceding 晦明 rebrand commit `fd4dfd6` is included.
+- Live verification at https://frank-yf.github.io/auralim-site/ and `/en/` passed the same four language/theme cases, including both primary v0.4.1 DMG links, v0.4.1/7.8 MB version text, gallery localization/zoom, language switching and responsive widths. No page exceptions or local-origin HTTP failures. Evidence: `artifacts/release-0.4.1/browser-live.json`.
+- All 11 published PNG assets (icons, social card, eight localized light/dark menu/settings captures) returned HTTP 200 and matched local SHA-256. Evidence: `artifacts/release-0.4.1/live-assets.json`. No unrelated global regression tests were run.
 
 ## Chinese rebrand to 晦明 / native v0.4.1 — 2026-10-23
 
