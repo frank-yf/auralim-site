@@ -61,3 +61,37 @@ test('sun and moon follow the native east-to-west rising and setting arcs', asyn
   assert.ok(Math.abs(celestialPosition(1,true,1000,600).x-500)<0.001);
   assert.ok(Math.abs(celestialPosition(0,false,1000,600).x-500)<0.001);
 });
+
+test('desktop celestial disks and landing points stay inside the dense sky', async () => {
+  const { celestialPosition, celestialRadius } = await import('../src/lib/transition.ts');
+  for (const [width, height] of [[1382, 840], [374, 709], [810, 328], [307, 480]]) {
+    const radius = celestialRadius(height);
+    for (const rising of [true, false]) for (let step = 0; step <= 20; step++) {
+      const center = celestialPosition(step / 20, rising, width, height);
+      for (let edge = 0; edge < 24; edge++) {
+        const angle = edge / 24 * Math.PI * 2;
+        const x = center.x + radius * Math.cos(angle), y = center.y + radius * Math.sin(angle);
+        const distance = Math.hypot((x - width * .5) / (width * .52), (y - height) / (height * .98));
+        assert.ok(distance < .66, `Disk must stay inside the dense sky (${width}x${height}, ${distance})`);
+        assert.ok(x >= width * .08 && x <= width * .92 && y >= height * .17 && y <= height * .83,
+          'Bodies must avoid the final screen-edge fade');
+      }
+    }
+  }
+});
+
+test('compact sun and moon enter and exit from the sides on a level path', async () => {
+  const { compactCelestialPosition, compactCelestialRadius } = await import('../src/lib/transition.ts');
+  for (const [width,height] of [[390,281],[320,190],[570,100]]) {
+    const radius = compactCelestialRadius(width,height);
+    assert.ok(radius <= height * .22 && radius <= width * .13);
+    const entering = Array.from({length:21},(_,i)=>compactCelestialPosition(i/20,true,width,height));
+    const leaving = Array.from({length:21},(_,i)=>compactCelestialPosition(i/20,false,width,height));
+    assert.ok(entering[0].x + radius < 0 && leaving.at(-1).x - radius > width);
+    assert.equal(entering.at(-1).x,width/2); assert.equal(leaving[0].x,width/2);
+    for(const points of [entering,leaving])for(let i=0;i<points.length;i++) {
+      assert.equal(points[i].y,height/2);
+      if(i)assert.ok(points[i].x>points[i-1].x);
+    }
+  }
+});

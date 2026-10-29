@@ -174,3 +174,10 @@ Ignored evidence under `artifacts/`: browser-check.json, screenshots, check/test
 - Downloaded all four public assets and matched their hashes against the local artifacts. Verified the stable Latest appcast endpoint advertises 0.3.2/build 27 and the immutable v0.3.2 ZIP URL.
 - Ran release:sync against the published Latest release. Chinese and English pages now advertise v0.3.2, with the DMG as the main download and updated ZIP, release-note and checksum links. The screenshot captions retain their actual capture version.
 - The scoped release metadata test, type check, production build and bilingual route/resource checks passed. This publication reused the 23 passing native tests recorded for the unchanged release commit; no full regression or update-installation test was run.
+
+## v0.5.1 release and sky transition — 2026-10-29
+
+- Synced download metadata to the published native v0.5.1 Release. Both primary downloads use the standard universal DMG; the standard ZIP and checksum links remain available. The release also contains a separate debug archive. Exact filename and release-path selection prevents that archive from becoming the normal website download.
+- The website completes the 3.2-second transition before committing its theme. Feathered night/day sky, glowing sun and moon, cached blur masks and enlarged desktop coverage are included. Mobile uses full-width coverage over the lower two-thirds of the viewport and horizontal side entry/exit. Existing screenshots retain their actual v0.4.1 capture labels.
+- Three targeted release-selection tests and the current-download metadata test passed. Four scoped orbit/body/download tests passed; Astro check reported zero errors, warnings or hints. The production-prefix build and bilingual route/resource checks passed (14 unique routes/assets).
+- Deployment and live verification are performed after pushing this commit. No full website or unrelated native regression was run. Release evidence is retained in ignored artifacts/release-0.5.1/ directories in the two repositories.

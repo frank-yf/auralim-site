@@ -16,7 +16,7 @@ html[data-gallery-ready="false"] [data-gallery-image]{visibility:hidden}
 /* Native-style offset controls: draft preview, centered fill and per-event reset. */
 .offset-head{gap:8px;margin-bottom:8px}.offset-head label{min-width:0;margin-right:auto;font-weight:600}.offset-head output{white-space:nowrap;border-radius:20px;background:var(--card);padding:4px 8px}.offset-head button{font-size:10px;background:var(--card);color:var(--text);padding:4px 9px;border-radius:5px}.offset-input-row{gap:12px}.number-input input{width:62px;text-align:right;padding:5px 7px}.offset-control input[type=range]{--offset-color:#dee0e6;--offset-gradient:linear-gradient(#dee0e6,#dee0e6);height:28px}.offset-control input[type=range]::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:var(--offset-gradient);border:1px solid #20232b12}.offset-control input[type=range]::-moz-range-track{height:12px;border-radius:6px;background:var(--offset-gradient);border:1px solid #20232b12}.offset-control input[type=range]::-webkit-slider-thumb{width:20px;height:20px;margin-top:-5px;border:3px solid #fff;background:var(--offset-color);box-shadow:0 1px 3px #0003}.offset-control input[type=range]::-moz-range-thumb{width:14px;height:14px;border:3px solid #fff;background:var(--offset-color);box-shadow:0 1px 3px #0003}.offset-directions>span{display:flex;align-items:center;gap:4px}.offset-directions{padding-right:88px}.offset-error{font-size:10px;color:#be4a40;margin-top:8px}.number-input input[aria-invalid=true]{border-color:#be4a40}
 :root[data-theme=dark] .offset-error{color:#ffa89e}
-.theme-transition{position:fixed;left:10vw;top:18.75vh;width:80vw;height:62.5vh;z-index:1000;pointer-events:none}.theme-transition[hidden]{display:none}
+.theme-transition{position:fixed;left:2vw;top:8vh;width:96vw;height:84vh;z-index:1000;pointer-events:none}.theme-transition[hidden]{display:none}
 @media(max-width:570px){.offset-card{padding:22px 18px}.offset-head label{font-size:11px}.offset-head output{padding:4px 6px;font-size:9px}.offset-head button{padding:4px 7px}.offset-directions{font-size:7px}.offset-directions>span{gap:2px}}
 
 .theme-icon-sun,.theme-icon-moon{display:block}.theme-icon-moon{display:none}:root[data-theme=dark] .theme-icon-sun{display:none}:root[data-theme=dark] .theme-icon-moon{display:block}
@@ -31,3 +31,6 @@ dialog:has(#dialog-original:not([hidden]))>img{max-height:calc(92dvh - 145px)}
 .offset-control.sunrise{--symbol-color:rgb(66% 45% 18%)}.offset-control.sunset{--symbol-color:rgb(35% 47% 68%)}
 :root[data-theme=dark] .offset-control.sunrise{--symbol-color:rgb(94% 76% 46%)}:root[data-theme=dark] .offset-control.sunset{--symbol-color:rgb(62% 73% 91%)}
 .offset-symbol-badge{display:inline-flex;align-items:center;justify-content:center;flex:none;width:28px;height:28px;border-radius:8px;color:var(--symbol-color);background:color-mix(in srgb,var(--symbol-color) 12%,transparent)}
+
+/* Phones fill the full width and lower two thirds of the viewport. */
+@media(max-width:570px){.theme-transition{left:0;top:calc(100vh / 3);width:100vw;height:calc(200vh / 3);top:calc(100dvh / 3);height:calc(200dvh / 3)}}

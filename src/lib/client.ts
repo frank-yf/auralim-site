@@ -92,17 +92,31 @@ all<HTMLButtonElement>('[data-jump]').forEach(button => button.addEventListener(
   timeline.value = String(example[event] + offsets[event]); selectMode('auto');
 }));
 const themeButton = get<HTMLButtonElement>('.theme-button');
+let pendingTheme: boolean | null = null;
 function setTheme(dark: boolean, animate = false) {
-  const changed = document.documentElement.dataset.theme !== (dark ? 'dark' : 'light');
-  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-  themeButton.setAttribute('aria-pressed', String(dark));
-  get<HTMLMetaElement>('meta[name="theme-color"]').content = dark ? '#171c27' : '#f7f6f2';
-  const tab = tabs.find(button => button.dataset.galleryTab === (dark ? 'dark' : 'light'));
-  if (tab) selectScreenshot(tab);
-  for (const event of ['sunrise', 'sunset'] as const) renderOffset(event);
-  if (animate && changed) themeTransition.play(dark ? 'dark' : 'light');
+  themeTransition.stop();
+  const commit = () => {
+    pendingTheme = null;
+    delete document.documentElement.dataset.pendingTheme;
+    themeButton.removeAttribute('aria-busy');
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    themeButton.setAttribute('aria-pressed', String(dark));
+    get<HTMLMetaElement>('meta[name="theme-color"]').content = dark ? '#171c27' : '#f7f6f2';
+    const tab = tabs.find(button => button.dataset.galleryTab === (dark ? 'dark' : 'light'));
+    if (tab) selectScreenshot(tab);
+    for (const event of ['sunrise', 'sunset'] as const) renderOffset(event);
+    if (animate) { try { localStorage.setItem('auralim-site-theme', dark ? 'dark' : 'light'); } catch {} }
+  };
+  if (animate && document.documentElement.dataset.theme !== (dark ? 'dark' : 'light')) {
+    pendingTheme = dark;
+    document.documentElement.dataset.pendingTheme = dark ? 'dark' : 'light';
+    themeButton.setAttribute('aria-busy', 'true');
+    themeTransition.play(dark ? 'dark' : 'light', commit);
+  } else { commit(); }
 }
-themeButton.addEventListener('click', () => { const dark = document.documentElement.dataset.theme !== 'dark'; setTheme(dark, true); try { localStorage.setItem('auralim-site-theme', dark ? 'dark' : 'light'); } catch {} });
+// A second click reverses the requested destination, cancelling the old effect
+// if that destination is the still-visible page theme.
+themeButton.addEventListener('click', () => setTheme(!(pendingTheme ?? (document.documentElement.dataset.theme === 'dark')), true));
 const image = get<HTMLImageElement>('#app-screenshot');
 const dialog = get<HTMLDialogElement>('#screenshot-dialog');
 const tabs = all<HTMLButtonElement>('[data-gallery-tab]');

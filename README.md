@@ -25,11 +25,11 @@ The site includes an interactive day/night desktop, Light / Auto / Dark controls
 ## Content and assets
 
 - `src/i18n/content.ts`: Simplified Chinese and English copy.
-- `src/lib/transition.ts`: 3.2-second sun/moon animation for website theme-button changes, using the native east-to-west arcs and a fixed centered half-area viewport overlay. Initial page load does not animate. Motion is canceled when hidden, replaced or reduced-motion preferences change.
+- `src/lib/transition.ts`: 3.2-second sun/moon animation that finishes before the website changes theme. A feathered sky shifts between night and day around the glowing sun and moon. Desktop uses a centered 96% × 84% overlay; mobile fills the width and lower two-thirds of the viewport, with bodies entering or leaving horizontally. Initial page load does not animate. Motion is canceled when hidden, replaced or reduced-motion preferences change.
 - `src/lib/demo.ts`: fixed example: sunrise 06:12, sunset 17:58. This is an illustration, not a live astronomical forecast or a port of the native app's solar engine. Moving either slider left delays its event; moving right advances it. Number inputs use negative values for earlier and positive for later.
 - `src/data/screenshots.ts`: captured app version, source commit, and versioned image filenames.
 - `src/data/languages.ts`: the native app’s 12 supported locales, displayed on both website routes. The website remains Simplified Chinese and English.
-- `src/data/release.json`: verified public download metadata. Current public release is v0.4.1 (universal DMG and ZIP, signed appcast, SHA-256 checksums). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. Location improvements are included in the current release.
+- `src/data/release.json`: verified public download metadata. Current public release is v0.5.1 (universal DMG and ZIP, signed appcast, SHA-256 checksums, and a separate debug ZIP). Main download buttons prefer a DMG when supplied and otherwise use the ZIP. The main download always selects the standard application; the debug build is available separately on the release page.
 - `public/images/app-icon.png`: small app icon from the native app’s tracked icon resource.
 - `public/images/app-icon-large.png`: unchanged 1254px native icon artwork for the large download-section showcase, zoom dialog and original-image link.
 - `public/images/settings-*.png`: native v0.4.1 settings captures using temporary example preferences. English pages use `settings-v0.4.1-en-*.png`; Chinese pages use `settings-v0.4.1-*.png`. No user location or account information is present.
