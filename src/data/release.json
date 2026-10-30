@@ -1,9 +1,9 @@
 {
-  "tag": "v0.5.2",
-  "url": "https://github.com/frank-yf/auralim-mac/releases/tag/v0.5.2",
-  "published": "2026-10-30T09:04:48Z",
-  "dmg": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.2/Auralim-0.5.2-macos-universal.dmg",
-  "zip": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.2/Auralim-0.5.2-macos-universal.zip",
-  "checksums": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.2/SHA256SUMS.txt",
-  "size": 8063749
+  "tag": "v0.5.3",
+  "url": "https://github.com/frank-yf/auralim-mac/releases/tag/v0.5.3",
+  "published": "2026-10-30T12:41:37Z",
+  "dmg": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.3/Auralim-0.5.3-macos-universal.dmg",
+  "zip": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.3/Auralim-0.5.3-macos-universal.zip",
+  "checksums": "https://github.com/frank-yf/auralim-mac/releases/download/v0.5.3/SHA256SUMS.txt",
+  "size": 8147834
 }

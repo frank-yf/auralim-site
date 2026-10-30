@@ -39,3 +39,14 @@ dialog:has(#dialog-original:not([hidden]))>img{max-height:calc(92dvh - 145px)}
 .offset-directions [data-symbol="sun.max.fill"]{color:rgb(255,214,133)}
 .offset-directions [data-symbol="moon.fill"]{color:rgb(87,120,186)}
 html[data-theme=dark] .offset-directions [data-symbol="moon.fill"]{color:rgb(112,153,224)}
+
+/* Current-source preview and optional controls, separate from public downloads. */
+.version-context{font-size:10px;line-height:1.7;color:var(--muted);margin-top:10px;max-width:420px}
+.control-details{margin-top:42px}.control-details>h3{font-size:21px;font-weight:550;line-height:1.5}.control-intro{font-size:12px;color:var(--muted);line-height:1.9;margin-top:10px}
+.control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:24px}.control-grid article{border-top:1px solid var(--line);padding-top:18px}.control-grid h4{font-size:14px;font-weight:550;line-height:1.6}.control-grid p{font-size:11px;line-height:1.95;color:var(--muted);margin-top:10px}
+@media(max-width:700px){.control-grid{grid-template-columns:1fr;gap:18px}.control-details>h3{font-size:19px}.version-context{max-width:100%}}
+
+/* Keep the full Chinese quotation inside the hero column at every width. */
+html[lang=zh-CN] .hero-copy{container-type:inline-size}
+html[lang=zh-CN] .hero h1{font-size:clamp(32px,12.5cqw,72px);letter-spacing:-1.5px}
+html[lang=zh-CN] .hero-title-last:after{display:none}
