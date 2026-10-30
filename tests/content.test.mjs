@@ -33,3 +33,13 @@ test('app language list contains all 12 supported locales in release order', () 
   assert.deepEqual(supportedAppLanguages.map(language => language.locale), ['en','zh-Hans','ja','zh-Hant','de','fr','es','pt-BR','ko','it','ru','nl']);
   assert.equal(new Set(supportedAppLanguages.map(language => language.name)).size,12);
 });
+
+
+test('offset hints use only earlier/later and document the corrected direction in both languages', () => {
+  for (const [locale, earlier, later] of [['zh-CN', '提前', '延后'], ['en', 'Earlier', 'Later']]) {
+    const t = content[locale];
+    assert.deepEqual([t.sunriseLeft, t.sunriseRight, t.sunsetLeft, t.sunsetRight], [earlier, later, earlier, later]);
+  }
+  assert.ok(content['zh-CN'].offsetNote.includes('向左提前，向右延后'));
+  assert.ok(content.en.offsetNote.includes('Left is earlier, right is later'));
+});

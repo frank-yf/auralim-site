@@ -14,9 +14,9 @@ test('manual appearance overrides the example time and offsets', () => {
   assert.equal(appearanceAt(0,120,-120,'light'), 'light');
   assert.equal(appearanceAt(720,-120,120,'dark'), 'dark');
 });
-test('both sliders move later to the left and earlier to the right', () => {
-  assert.equal(offsetFromTrack(-120),120);
-  assert.equal(offsetFromTrack(45),-45);
+test('both sliders move earlier to the left and later to the right', () => {
+  assert.equal(offsetFromTrack(-120),-120);
+  assert.equal(offsetFromTrack(45),45);
   assert.equal(appearanceAt(example.sunrise,60,0), 'dark');
   assert.equal(appearanceAt(example.sunrise-60,-60,0), 'light');
   assert.equal(appearanceAt(example.sunset,0,60), 'light');
@@ -42,10 +42,10 @@ test('native slider gradients start neutral and reverse warmth for sunrise and s
   const { offsetTrack } = await import('../src/lib/demo.ts');
   for (const dark of [false,true]) {
     assert.equal(offsetTrack(0,'sunrise',dark).color,offsetTrack(0,'sunrise',dark).base);
-    assert.equal(offsetTrack(-120,'sunrise',dark).position,100);
-    assert.equal(offsetTrack(120,'sunrise',dark).position,0);
-    assert.equal(offsetTrack(-120,'sunrise',dark).color,'rgb(255, 214, 133)');
-    assert.equal(offsetTrack(120,'sunset',dark).color,'rgb(255, 214, 133)');
+    assert.equal(offsetTrack(-120,'sunrise',dark).position,0);
+    assert.equal(offsetTrack(120,'sunrise',dark).position,100);
+    assert.equal(offsetTrack(120,'sunrise',dark).color,'rgb(255, 214, 133)');
+    assert.equal(offsetTrack(-120,'sunset',dark).color,'rgb(255, 214, 133)');
     assert.equal(offsetTrack(10,'sunrise',dark).color,offsetTrack(-10,'sunset',dark).color);
     assert.notEqual(offsetTrack(5,'sunrise',dark).color,offsetTrack(0,'sunrise',dark).color);
   }
@@ -93,5 +93,14 @@ test('compact sun and moon enter and exit from the sides on a level path', async
       assert.equal(points[i].y,height/2);
       if(i)assert.ok(points[i].x>points[i-1].x);
     }
+  }
+});
+
+
+test('every signed offset keeps the same clock direction when round-tripped through the slider', async () => {
+  const { offsetTrack } = await import('../src/lib/demo.ts');
+  for (let minute = -120; minute <= 120; minute++) {
+    assert.equal(offsetFromTrack(minute), minute);
+    assert.ok(Math.abs(offsetTrack(minute, 'sunrise', false).position - (minute + 120) / 2.4) < 1e-10);
   }
 });

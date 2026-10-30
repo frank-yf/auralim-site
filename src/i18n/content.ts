@@ -19,10 +19,10 @@ export const content = {
     signature: ['Swift 原生', '菜单栏常驻', '本地天文计算'],
     rhythmKicker: '留一点时间，给自己', rhythmTitle: '准时，也可以是你的时间。',
     rhythmBody: '想让清晨晚一点亮起来，或让夜色提前到来？日出与日落各有自己的节奏，提前、延后，最多两小时。',
-    offsetTitle: '试着调一调', offsetNote: '向左延后，向右提前。拖动或输入时预览，松手、回车或离开输入框后应用；负数提前，正数延后。',
+    offsetTitle: '试着调一调', offsetNote: '向左提前，向右延后。日出向太阳侧为延后，日落向太阳侧为提前。拖动或输入时预览，松手、回车或离开输入框后应用；负数提前，正数延后。',
     offsetLabels: ['日出偏移', '日落偏移'], earlier: '提前', later: '延后', onTime: '准时', minute: '分钟', reset: '归零',
     offsetInvalid: '请输入 −120 到 +120 之间的整数。',
-    sunriseLeft: '转暗 · 延后', sunriseRight: '转亮 · 提前', sunsetLeft: '转亮 · 延后', sunsetRight: '转暗 · 提前',
+    sunriseLeft: '提前', sunriseRight: '延后', sunsetLeft: '提前', sunsetRight: '延后',
     fixedExample: '固定示例：上海，日出 06:12 / 日落 17:58。用于体验交互，不是实时天文预报。',
     detailsKicker: '存在感少一点，贴心多一点', detailsTitle: '把变化交给晦明。',
     features: [
@@ -48,7 +48,7 @@ export const content = {
     faqTitle: '你可能想知道',
     faq: [
       ['如何安装与打开？', '打开下载的 DMG，将 Auralim 拖入「应用程序」；也可解压 ZIP 后安装。打开后，在菜单栏找到应用图标。如果 macOS 阻止打开，请确认下载来自本项目，再参考 Apple 的官方说明。'],
-      ['和 macOS 的自动外观有什么区别？', '晦明独立计算当地日出日落，并允许分别调整切换时间。应用的「自动」指日出日落计划；系统自动状态会单独显示，避免混淆。'],
+      ['和 macOS 的自动外观有什么区别？', '晦明独立计算当地日出日落，并允许分别调整切换时间。应用的「自动」指日出日落计划；系统自动状态会单独显示，避免混淆。托盘和设置中手动选择浅色或深色会跳过倒计时，按动画开关播放后切换；倒计时仅用于自动计划。'],
       ['需要联网，或者上传我的位置吗？', '手动城市模式完全离线。自动定位依赖 macOS 定位服务，可能需要网络或 Wi-Fi；天文与时区计算仍在本机完成，应用不上传位置数据。'],
       ['切换系统外观，需要什么权限？', '首次实际切换时，需要允许晦明控制 System Events。只有选择自动定位后，才会申请定位权限。'],
       ['支持哪些 Mac？', '公开安装包包含 Apple 芯片与 Intel 两种架构，要求 macOS 13 或更高版本。Apple 芯片与 macOS 13 最低版本尚未完成实机验收。'],
@@ -73,10 +73,10 @@ export const content = {
     signature: ['Native Swift', 'Lives in your menu bar', 'On-device solar calculations'],
     rhythmKicker: 'YOUR DAY, YOUR OWN RHYTHM', rhythmTitle: 'On time. On your terms.',
     rhythmBody: 'A little more quiet before the morning. An earlier start to the evening. Set sunrise and sunset independently, up to two hours either way.',
-    offsetTitle: 'Make a little adjustment', offsetNote: 'Left is later, right is earlier. Preview while dragging or typing; apply on release, Return or leaving the field. Negative means earlier, positive means later.',
+    offsetTitle: 'Make a little adjustment', offsetNote: 'Left is earlier, right is later. The sun side is later at sunrise and earlier at sunset. Preview while dragging or typing; apply on release, Return or leaving the field. Negative means earlier, positive means later.',
     offsetLabels: ['Sunrise offset', 'Sunset offset'], earlier: 'earlier', later: 'later', onTime: 'On time', minute: 'min', reset: 'Reset',
     offsetInvalid: 'Enter a whole number from −120 to +120.',
-    sunriseLeft: 'Stay dark · later', sunriseRight: 'Go light · earlier', sunsetLeft: 'Stay light · later', sunsetRight: 'Go dark · earlier',
+    sunriseLeft: 'Earlier', sunriseRight: 'Later', sunsetLeft: 'Earlier', sunsetRight: 'Later',
     fixedExample: 'Fixed example: Shanghai, sunrise 06:12 / sunset 17:58. An interactive illustration, not a live astronomical forecast.',
     detailsKicker: 'LESS TO MANAGE. MORE TO ENJOY.', detailsTitle: 'Let the day take care of it.',
     features: [
@@ -102,7 +102,7 @@ export const content = {
     faqTitle: 'A few things to know',
     faq: [
       ['How do I install and open it?', 'Open the downloaded DMG and drag Auralim into Applications. You can also unzip the ZIP archive to install the app. Open it and look for the menu bar icon. If macOS blocks the app, verify that you downloaded it from this project, then follow Apple’s official guidance.'],
-      ['How is this different from macOS Auto?', 'Auralim calculates local sunrise and sunset independently and lets you offset each switch. Auto in the app means its solar schedule. System Auto is shown separately to keep the two clear.'],
+      ['How is this different from macOS Auto?', 'Auralim calculates local sunrise and sunset independently and lets you offset each switch. Auto in the app means its solar schedule. System Auto is shown separately to keep the two clear. Manual Light/Dark choices in the menu or settings skip the countdown and finish the enabled animation before switching. The countdown applies only to the automatic schedule.'],
       ['Does it need the internet or upload my location?', 'Manual city mode is entirely offline. Automatic location uses macOS Location Services, which may need Wi-Fi or a network connection. Solar and time-zone calculations stay on-device. Auralim does not upload location data.'],
       ['Which permissions does it need?', 'The first appearance change requires permission to control System Events. Location permission is requested only when you choose automatic location.'],
       ['Which Macs are supported?', 'The public package includes Apple silicon and Intel architectures and requires macOS 13 or later. Apple silicon hardware and the minimum macOS 13 version have not yet been tested on-device.'],

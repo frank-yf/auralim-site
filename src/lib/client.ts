@@ -15,7 +15,7 @@ function renderOffset(event: SolarEvent) {
   const text = value === 0 ? t.onTime : document.body.dataset.locale === 'en' ? `${Math.abs(value)} ${t.minute} ${value < 0 ? t.earlier : t.later}` : `${value < 0 ? t.earlier : t.later} ${Math.abs(value)} ${t.minute}`;
   get<HTMLOutputElement>(`[data-offset-description="${event}"]`).value = text;
   const track = get<HTMLInputElement>(`[data-offset-track="${event}"]`);
-  track.value = String(-value);
+  track.value = String(value);
   track.setAttribute('aria-valuetext', text);
   const { position, base, color } = offsetTrack(value, event, document.documentElement.dataset.theme === 'dark');
   const start = Math.min(50, position), end = Math.max(50, position);

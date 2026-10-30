@@ -34,3 +34,8 @@ dialog:has(#dialog-original:not([hidden]))>img{max-height:calc(92dvh - 145px)}
 
 /* Phones fill the full width and lower two thirds of the viewport. */
 @media(max-width:570px){.theme-transition{left:0;top:calc(100vh / 3);width:100vw;height:calc(200vh / 3);top:calc(100dvh / 3);height:calc(200dvh / 3)}}
+
+/* Match the native slider endpoint palette for direction icons. */
+.offset-directions [data-symbol="sun.max.fill"]{color:rgb(255,214,133)}
+.offset-directions [data-symbol="moon.fill"]{color:rgb(87,120,186)}
+html[data-theme=dark] .offset-directions [data-symbol="moon.fill"]{color:rgb(112,153,224)}
